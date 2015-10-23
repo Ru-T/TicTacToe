@@ -14,16 +14,9 @@ class Board
   end
 
   def display_board
-    # @board[0].each do |s|
-    #   print s.status + "|"
-    # end
     puts "#{@board[0][0]}" + "|" + "#{@board[0][1]}" + "|" + "#{@board[0][2]}"
     puts "#{@board[1][0]}" + "|" + "#{@board[1][1]}" + "|" + "#{@board[1][2]}"
     puts "#{@board[2][0]}" + "|" + "#{@board[2][1]}" + "|" + "#{@board[2][2]}"
-    # puts @board[0][0].status + "|" + @board[0][1].status + "|" + @board[0][2].status
-    # byebug
-    # puts @board[1][0].status + "|" + @board[1][1].status + "|" + @board[1][2].status
-    # puts @board[2][0].status + "|" + @board[2][1].status + "|" + @board[2][2].status
   end
 
   def set_up_game
@@ -33,6 +26,15 @@ class Board
     puts "Player 2, please enter your name."
     name2 = gets.chomp
     @player2 = name2
+  end
+
+  def x_of(position)
+    x_hash = { "A" => 0, "B" => 1, "C" => 2 }
+    x_hash[input[0]]
+  end
+
+  def y_of(position)
+    position[1].to_i - 1
   end
 
   def place_on_board
