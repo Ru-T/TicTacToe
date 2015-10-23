@@ -29,5 +29,4 @@ class Board
     @player2 = name2
   end
 
-
 end
