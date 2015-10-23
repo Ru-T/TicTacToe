@@ -19,7 +19,7 @@ class Position
   end
 
   def occupied
-    @status == true || @status == false
+    @status != nil
   end
 
 end

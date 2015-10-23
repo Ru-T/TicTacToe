@@ -36,24 +36,21 @@ class Board
   end
 
   def y_of(position)
-    position[1].to_i - 1
+    y_hash = {"1" => 0, "2" => 1, "3" => 2}
+    y_hash[position[1]]
   end
 
   def place_on_board
-    9.times do
+    until full do #BUG: does not go until the board is full
       puts "Choose a spot on the tic tac toe board."
       position = gets.chomp
       x = x_of(position)
       y = y_of(position)
-      if @board[x][y].status == nil
-        if @p1_turn
-          @board[x][y].status = true
-        else
-          @board[x][y].status = false
-        end
-        display_board
+      if x && y && @board[x][y].status == nil
+        @board[x][y].status = @p1_turn
         take_turn
-      elsif @board[x][y].occupied
+        display_board
+      elsif x && y && @board[x][y].occupied
         puts "That spot is already taken!"
       else
         # BUG: Cannot enter invalid entry!
@@ -63,11 +60,11 @@ class Board
   end
 
   def take_turn
-    if @p1_turn
-      @p1_turn = false
-    else
-      @p1_turn = true
-    end
+    @p1_turn = !@p1_turn
+  end
+
+  def full
+    return true if all? inside all? are occupied (method on position)
   end
 
   def play
