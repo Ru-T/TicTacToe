@@ -3,7 +3,7 @@ require './position.rb'
 
 class Board
 
-  attr_reader :board, :player1, :player2
+  attr_reader :board, :player1, :player2, :p1_turn
 
   def initialize
     @board = [[Position.new, Position.new, Position.new],
@@ -21,6 +21,7 @@ class Board
   end
 
   def set_up_game
+    puts "Welcome! It's time to play Tic Tac Toe."
     puts "Player 1, please enter your name."
     name1 = gets.chomp
     @player1 = name1
@@ -39,16 +40,19 @@ class Board
   end
 
   def place_on_board
-    array = []
-    until array.length == 9 # refactor to until the game is won
-    puts "Choose a spot on the tic tac toe board."
+    9.times do
+      puts "Choose a spot on the tic tac toe board."
       position = gets.chomp
       x = x_of(position)
       y = y_of(position)
       if @board[x][y].status == nil
-        take_turn
+        if @p1_turn
+          @board[x][y].status = true
+        else
+          @board[x][y].status = false
+        end
         display_board
-        array << position
+        take_turn
       elsif @board[x][y].occupied
         puts "That spot is already taken!"
       else
@@ -56,17 +60,23 @@ class Board
         puts "This spot does not exist on the board. Sorry sucka!"
       end
     end
-    puts "The game is a draw - neither player has won."
   end
 
   def take_turn
     if @p1_turn
-      @board[x][y].status = true
       @p1_turn = false
-    else @p1_turn == false
-      @board[x][y].status = false
+    else
       @p1_turn = true
     end
   end
+
+  def play
+    set_up_game
+    display_board
+    # until #game is won
+    place_on_board
+    # end
+  end
+
 
 end
