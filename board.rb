@@ -49,7 +49,7 @@ class Board
         @board[x][y].status = true
         display_board
         array << position
-      elsif @board[x][y].status == true || @board[x][y].status == false
+      elsif @board[x][y].occupied
         puts "That spot is already taken!"
       else
         puts "This spot does not exist on the board. Sorry sucka!"
