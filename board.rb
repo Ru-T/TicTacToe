@@ -57,11 +57,8 @@ class Board
       y = y_of(position)
       if x && y && @board[x][y].status == nil
         @board[x][y].status = @p1_turn
-        winner
-          if winner == true
-            break
-          end
         take_turn
+        winner
         display_board
       elsif x && y && @board[x][y].occupied
         puts "That spot is already taken!"
@@ -87,15 +84,16 @@ class Board
     @winning_lines.each do |line|
       if line.all?{|xy| @board[xy[0]][xy[1]].status}
         puts "#{@player1}, you've won!"
+        winner = true
         break
       elsif line.all?{|xy| @board[xy[0]][xy[1]].status == false}
         puts "#{@player2}, you've won!"
+        winner = true
         break
       else
-        return false
+        winner = false
       end
     end
-    return true
   end
 
   def play
