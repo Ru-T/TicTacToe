@@ -6,18 +6,24 @@ class Board
   attr_reader :board, :player1, :player2
 
   def initialize
-    @board = [[Position.new("A1"), Position.new("A2"), Position.new("A3")],
-             [Position.new("B1"), Position.new("B2"), Position.new("B3")],
-             [Position.new("C1"), Position.new("C2"), Position.new("C3")]]
+    @board = [[Position.new, Position.new, Position.new],
+             [Position.new, Position.new, Position.new],
+             [Position.new, Position.new, Position.new]]
     @player1 = player1
     @player2 = player2
-    @p1_turn = true
   end
 
   def display_board
-    puts @board[0][0].status + "|" + @board[0][1].status + "|" + @board[0][2].status
-    puts @board[1][0].status + "|" + @board[1][1].status + "|" + @board[1][2].status
-    puts @board[2][0].status + "|" + @board[2][1].status + "|" + @board[2][2].status
+    # @board[0].each do |s|
+    #   print s.status + "|"
+    # end
+    puts "#{@board[0][0]}" + "|" + "#{@board[0][1]}" + "|" + "#{@board[0][2]}"
+    puts "#{@board[1][0]}" + "|" + "#{@board[1][1]}" + "|" + "#{@board[1][2]}"
+    puts "#{@board[2][0]}" + "|" + "#{@board[2][1]}" + "|" + "#{@board[2][2]}"
+    # puts @board[0][0].status + "|" + @board[0][1].status + "|" + @board[0][2].status
+    # byebug
+    # puts @board[1][0].status + "|" + @board[1][1].status + "|" + @board[1][2].status
+    # puts @board[2][0].status + "|" + @board[2][1].status + "|" + @board[2][2].status
   end
 
   def set_up_game
@@ -27,6 +33,26 @@ class Board
     puts "Player 2, please enter your name."
     name2 = gets.chomp
     @player2 = name2
+  end
+
+  def place_on_board
+    array = []
+    until array.length == 9 #refactor to until the game is won!!!
+      puts "Choose a spot on the tic tac toe board."
+      spot = gets.chomp
+      if position.occupied
+        puts "That spot is already taken!"
+      elsif
+        @board.each do |row|
+          row.each do |position|
+            position.status = true
+          end
+        end
+        array << position
+      else
+        puts "This spot does not exist on the board. Sorry sucka!"
+      end
+    end
   end
 
 end
