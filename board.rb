@@ -12,13 +12,13 @@ class Board
     @player1 = player1
     @player2 = player2
     @p1_turn = true
-    @winners = [
+    @winning_lines = [
               # horizontally:
-              [[0][0], [0][1], [0][2]], [[1][0], [1][1], [1][2]], [[2][0], [2][1], [2][2]],
+              [[0, 0], [0, 1], [0, 2]], [[1, 0], [1, 1], [1, 2]], [[2, 0], [2, 1], [2, 2]],
               # vertically:
-              [[0][0], [1][0], [2][0]], [[0][1], [1][1], [2][1]], [[0][2], [1][2], [2][2]],
-              # diagonally:
-              [[0][0], [1][1], [2][2]], [[0][2], [1][1], [2][0]]
+              [[0, 0], [1, 0], [2, 0]], [[0, 1], [1, 1], [2, 1]], [[0, 2], [1, 2], [2, 2]],
+              # # diagonally:
+              [[0, 0], [1, 1], [2, 2]], [[0, 2], [1, 1], [2, 0]]
               ]
   end
 
@@ -57,6 +57,9 @@ class Board
       y = y_of(position)
       if x && y && @board[x][y].status == nil
         @board[x][y].status = @p1_turn
+        if winner == true
+          break
+        end
         take_turn
         display_board
       elsif x && y && @board[x][y].occupied
@@ -65,14 +68,13 @@ class Board
         puts "This spot does not exist on the board. Sorry sucka!"
       end
     end
-    puts "The game is a draw - neither player has won."
   end
 
   private def take_turn
     @p1_turn = !@p1_turn
   end
 
-  def full
+  def full # You can get this on one line
     board.all? do |row|
       row.all? do |position|
         position.occupied
@@ -80,10 +82,24 @@ class Board
     end
   end
 
+  def winner
+    @winning_lines.each do |line|
+      if line.all?{|xy| @board[xy[0]][xy[1]].status}
+        puts "#{@player1}, you've won!"
+        break
+      elsif line.all?{|xy| @board[xy[0]][xy[1]].status == false}
+        puts "#{@player2}, you've won!"
+        break
+      else
+        return false
+      end
+    end
+    return true
+  end
+
   def play
     set_up_game
     place_on_board
   end
-
 
 end
