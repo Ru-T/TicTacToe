@@ -30,7 +30,7 @@ class Board
 
   def x_of(position)
     x_hash = { "A" => 0, "B" => 1, "C" => 2 }
-    x_hash[input[0]]
+    x_hash[position[0]]
   end
 
   def y_of(position)
@@ -38,23 +38,13 @@ class Board
   end
 
   def place_on_board
-    array = []
-    until array.length == 9 #refactor to until the game is won!!!
-      puts "Choose a spot on the tic tac toe board."
-      spot = gets.chomp
-      if position.occupied
-        puts "That spot is already taken!"
-      elsif
-        @board.each do |row|
-          row.each do |position|
-            position.status = true
-          end
-        end
-        array << position
-      else
-        puts "This spot does not exist on the board. Sorry sucka!"
-      end
-    end
+    board = Board.new
+    puts "Choose a spot on the tic tac toe board."
+    position = gets.chomp
+    x = board.x_of(position)
+    y = board.y_of(position)
+    @board[x][y].status = true
+    display_board
   end
 
 end
