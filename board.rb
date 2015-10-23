@@ -1,19 +1,20 @@
 require 'byebug'
+require './position.rb'
 
 class Board
 
   attr_reader :board, :player1, :player2
 
   def initialize
-    @board = Array.new(9)
+    @board = [[Position.new, Position.new, Position.new]],
+             [[Position.new, Position.new, Position.new]],
+             [[Position.new, Position.new, Position.new]]
     @player1 = player1
     @player2 = player2
   end
 
   def display_board
-    puts "| #{@board[0]} | #{@board[1]} | #{@board[2]} |"
-    puts "| #{@board[3]} | #{@board[4]} | #{@board[5]} |"
-    puts "| #{@board[6]} | #{@board[7]} | #{@board[8]} |"
+    puts @board
   end
 
   def set_up_game
