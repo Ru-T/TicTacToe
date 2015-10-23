@@ -42,7 +42,7 @@ class Board
 
   private def place_on_board
     display_board
-    9.times do #BUG: does not go until the board is full
+    until full do
       puts "Choose a spot on the tic tac toe board."
       position = gets.chomp
       x = x_of(position)
@@ -63,8 +63,12 @@ class Board
     @p1_turn = !@p1_turn
   end
 
-  private def full
-    return true if all? inside all? are occupied (method on position)
+  def full
+    board.all? do |row|
+      row.all? do |position|
+        position.occupied
+      end
+    end
   end
 
   def play
