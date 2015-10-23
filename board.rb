@@ -14,13 +14,13 @@ class Board
     @p1_turn = true
   end
 
-  def display_board
+  private def display_board
     puts "#{@board[0][0]}" + "|" + "#{@board[0][1]}" + "|" + "#{@board[0][2]}"
     puts "#{@board[1][0]}" + "|" + "#{@board[1][1]}" + "|" + "#{@board[1][2]}"
     puts "#{@board[2][0]}" + "|" + "#{@board[2][1]}" + "|" + "#{@board[2][2]}"
   end
 
-  def set_up_game
+  private def set_up_game
     puts "Welcome! It's time to play Tic Tac Toe."
     puts "Player 1, please enter your name."
     name1 = gets.chomp
@@ -30,18 +30,19 @@ class Board
     @player2 = name2
   end
 
-  def x_of(position)
+  private def x_of(position)
     x_hash = { "A" => 0, "B" => 1, "C" => 2 }
     x_hash[position[0]]
   end
 
-  def y_of(position)
+  private def y_of(position)
     y_hash = {"1" => 0, "2" => 1, "3" => 2}
     y_hash[position[1]]
   end
 
-  def place_on_board
-    until full do #BUG: does not go until the board is full
+  private def place_on_board
+    display_board
+    9.times do #BUG: does not go until the board is full
       puts "Choose a spot on the tic tac toe board."
       position = gets.chomp
       x = x_of(position)
@@ -53,26 +54,22 @@ class Board
       elsif x && y && @board[x][y].occupied
         puts "That spot is already taken!"
       else
-        # BUG: Cannot enter invalid entry!
         puts "This spot does not exist on the board. Sorry sucka!"
       end
     end
   end
 
-  def take_turn
+  private def take_turn
     @p1_turn = !@p1_turn
   end
 
-  def full
+  private def full
     return true if all? inside all? are occupied (method on position)
   end
 
   def play
     set_up_game
-    display_board
-    # until #game is won
     place_on_board
-    # end
   end
 
 
