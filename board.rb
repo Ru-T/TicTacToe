@@ -36,9 +36,17 @@ class Board
     puts "Player 1, please enter your name."
     name1 = gets.chomp
     @player1 = name1
-    puts "Player 2, please enter your name."
+    puts "Player 2, are you a human or a computer?"
     name2 = gets.chomp
-    @player2 = name2
+    if name2 == "human"
+      puts "Player 2, please enter your name."
+      name2 = gets.chomp
+      @player2 = name2
+    elsif name2 == "computer"
+      @computer_player = name2
+    else
+      puts "Please specifiy if you are a computer or a human."
+    end
   end
 
   private def x_of(position)
