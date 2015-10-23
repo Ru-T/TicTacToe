@@ -57,9 +57,10 @@ class Board
       y = y_of(position)
       if x && y && @board[x][y].status == nil
         @board[x][y].status = @p1_turn
-        if winner == true
-          break
-        end
+        winner
+          if winner == true
+            break
+          end
         take_turn
         display_board
       elsif x && y && @board[x][y].occupied
