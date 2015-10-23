@@ -20,6 +20,7 @@ class Board
               # # diagonally:
               [[0, 0], [1, 1], [2, 2]], [[0, 2], [1, 1], [2, 0]]
               ]
+    @win = false
   end
 
   private def display_board
@@ -48,6 +49,35 @@ class Board
     y_hash[position[1]]
   end
 
+  private def take_turn
+    @p1_turn = !@p1_turn
+    display_board
+  end
+
+  def full # You can get this on one line
+    board.all? do |row|
+      row.all? do |position|
+        position.occupied
+      end
+    end
+  end
+
+  private def winner
+    @winning_lines.each do |line|
+      if line.all?{|xy| @board[xy[0]][xy[1]].status}
+        puts "#{@player1}, you've won!"
+        @win = true
+        break
+      elsif line.all?{|xy| @board[xy[0]][xy[1]].status == false}
+        puts "#{@player2}, you've won!"
+        @win = true
+        break
+      else
+        @win = false
+      end
+    end
+  end
+
   private def place_on_board
     display_board
     until full do
@@ -59,39 +89,11 @@ class Board
         @board[x][y].status = @p1_turn
         take_turn
         winner
-        display_board
+        break if @win == true
       elsif x && y && @board[x][y].occupied
         puts "That spot is already taken!"
       else
-        puts "This spot does not exist on the board. Sorry sucka!"
-      end
-    end
-  end
-
-  private def take_turn
-    @p1_turn = !@p1_turn
-  end
-
-  def full # You can get this on one line
-    board.all? do |row|
-      row.all? do |position|
-        position.occupied
-      end
-    end
-  end
-
-  def winner
-    @winning_lines.each do |line|
-      if line.all?{|xy| @board[xy[0]][xy[1]].status}
-        puts "#{@player1}, you've won!"
-        winner = true
-        break
-      elsif line.all?{|xy| @board[xy[0]][xy[1]].status == false}
-        puts "#{@player2}, you've won!"
-        winner = true
-        break
-      else
-        winner = false
+        puts "This spot does not exist. Sorry sucka!"
       end
     end
   end
