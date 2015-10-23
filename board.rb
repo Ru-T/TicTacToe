@@ -46,8 +46,7 @@ class Board
       x = x_of(position)
       y = y_of(position)
       if @board[x][y].status == nil
-        @board[x][y].status = true
-        # take_turn
+        take_turn
         display_board
         array << position
       elsif @board[x][y].occupied
@@ -64,7 +63,7 @@ class Board
     if @p1_turn
       @board[x][y].status = true
       @p1_turn = false
-    else
+    else @p1_turn == false
       @board[x][y].status = false
       @p1_turn = true
     end
