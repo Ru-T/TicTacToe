@@ -10,4 +10,6 @@ class BoardTest < Minitest::Test
     assert Board
   end
 
-end  
+
+
+end
