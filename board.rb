@@ -12,6 +12,14 @@ class Board
     @player1 = player1
     @player2 = player2
     @p1_turn = true
+    @winners = [
+              # horizontally:
+              [[0][0], [0][1], [0][2]], [[1][0], [1][1], [1][2]], [[2][0], [2][1], [2][2]],
+              # vertically:
+              [[0][0], [1][0], [2][0]], [[0][1], [1][1], [2][1]], [[0][2], [1][2], [2][2]],
+              # diagonally:
+              [[0][0], [1][1], [2][2]], [[0][2], [1][1], [2][0]]
+              ]
   end
 
   private def display_board
@@ -57,6 +65,7 @@ class Board
         puts "This spot does not exist on the board. Sorry sucka!"
       end
     end
+    puts "The game is a draw - neither player has won."
   end
 
   private def take_turn

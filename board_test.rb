@@ -3,6 +3,8 @@ require 'minitest/pride'
 require 'byebug'
 
 require './board.rb'
+require './position.rb'
+
 
 class BoardTest < Minitest::Test
 
