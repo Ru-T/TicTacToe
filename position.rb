@@ -8,10 +8,6 @@ class Position
     @status = nil
   end
 
-  def occupied
-    @status == true
-  end
-
   def to_s
     if @status == nil
       "_"
@@ -20,6 +16,10 @@ class Position
     else @status == false
       "O"
     end
+  end
+
+  def occupied
+    @status == true || @status == false
   end
 
 end

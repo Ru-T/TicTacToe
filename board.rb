@@ -11,6 +11,7 @@ class Board
              [Position.new, Position.new, Position.new]]
     @player1 = player1
     @player2 = player2
+    @p1_turn = true
   end
 
   def display_board
@@ -38,24 +39,35 @@ class Board
   end
 
   def place_on_board
-    board = Board.new
     array = []
     until array.length == 9 # refactor to until the game is won
     puts "Choose a spot on the tic tac toe board."
       position = gets.chomp
-      x = board.x_of(position)
-      y = board.y_of(position)
+      x = x_of(position)
+      y = y_of(position)
       if @board[x][y].status == nil
         @board[x][y].status = true
+        # take_turn
         display_board
         array << position
       elsif @board[x][y].occupied
         puts "That spot is already taken!"
       else
+        # BUG: Cannot enter invalid entry!
         puts "This spot does not exist on the board. Sorry sucka!"
       end
     end
     puts "The game is a draw - neither player has won."
+  end
+
+  def take_turn
+    if @p1_turn
+      @board[x][y].status = true
+      @p1_turn = false
+    else
+      @board[x][y].status = false
+      @p1_turn = true
+    end
   end
 
 end
