@@ -8,7 +8,7 @@ class Position
     @status = nil
   end
 
-  def to_s
+  private def to_s
     if @status == nil
       "_"
     elsif @status == true
