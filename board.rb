@@ -1,5 +1,6 @@
 require 'byebug'
 require './position.rb'
+require './computer_player.rb'
 
 class Board
 
@@ -11,6 +12,7 @@ class Board
              [Position.new, Position.new, Position.new]]
     @player1 = player1
     @player2 = player2
+    @computer_player = ComputerPlayer.new
     @p1_turn = true
     @winning_lines = [
               # horizontally:
