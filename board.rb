@@ -39,12 +39,23 @@ class Board
 
   def place_on_board
     board = Board.new
+    array = []
+    until array.length == 9 # refactor to until the game is won
     puts "Choose a spot on the tic tac toe board."
-    position = gets.chomp
-    x = board.x_of(position)
-    y = board.y_of(position)
-    @board[x][y].status = true
-    display_board
+      position = gets.chomp
+      x = board.x_of(position)
+      y = board.y_of(position)
+      if @board[x][y].status == nil
+        @board[x][y].status = true
+        display_board
+        array << position
+      elsif @board[x][y].status == true || @board[x][y].status == false
+        puts "That spot is already taken!"
+      else
+        puts "This spot does not exist on the board. Sorry sucka!"
+      end
+    end
+    puts "The game is a draw - neither player has won."
   end
 
 end
