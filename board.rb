@@ -60,7 +60,7 @@ class Board
     y_hash[position[1]]
   end
 
-  def full # You can get this on one line
+  private def full # You can get this on one line
     board.all? do |row|
       row.all? do |position|
         position.occupied
@@ -90,6 +90,8 @@ class Board
   end
 
   private def computer_turn
+    @position = ["A", "B", "C"].sample + ["1", "2", "3"].sample
+    puts @position
   end
 
   private def place_on_board
@@ -97,8 +99,7 @@ class Board
     until full do
       puts "Choose a spot on the tic tac toe board."
       if @computer_game && @p1_turn == false
-        @position = ["A", "B", "C"].sample + ["1", "2", "3"].sample
-        puts @position
+        computer_turn
       else
         @position = gets.chomp
       end
