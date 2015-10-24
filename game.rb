@@ -2,4 +2,4 @@ require './board'
 
 board = Board.new
 
-board.play
+ board.play
