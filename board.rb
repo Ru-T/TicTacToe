@@ -19,20 +19,23 @@ class Board
               [[0, 0], [0, 1], [0, 2]], [[1, 0], [1, 1], [1, 2]], [[2, 0], [2, 1], [2, 2]],
               # vertically:
               [[0, 0], [1, 0], [2, 0]], [[0, 1], [1, 1], [2, 1]], [[0, 2], [1, 2], [2, 2]],
-              # # diagonally:
+              # diagonally:
               [[0, 0], [1, 1], [2, 2]], [[0, 2], [1, 1], [2, 0]]
               ]
     @win = nil
     @computer_game = false
     @position = nil
     @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
-    @score = nil
+    @scores = []
   end
 
   private def display_board
-    puts "#{@board[0][0]}" + "|" + "#{@board[0][1]}" + "|" + "#{@board[0][2]}"
-    puts "#{@board[1][0]}" + "|" + "#{@board[1][1]}" + "|" + "#{@board[1][2]}"
-    puts "#{@board[2][0]}" + "|" + "#{@board[2][1]}" + "|" + "#{@board[2][2]}"
+    @board.each do |row|
+      row.each do |position|
+        print "#{position}" + "|"
+      end
+      puts ""
+    end
   end
 
   private def set_up_game
@@ -47,8 +50,7 @@ class Board
       name2 = gets.chomp
       @player2 = name2
     elsif name2 == "computer"
-      @player2 = "Unbeatable"
-      #ComputerPlayer.new
+      @player2 = "Unbeatable" #ComputerPlayer.new
       @computer_game = true
     else
       puts "Please specify if you are a computer or a human."
@@ -99,17 +101,33 @@ class Board
     puts @position
   end
 
-  def possible_moves
+  private def possible_moves
     @moves -= [@position]
   end
 
-  def score_moves
-    if winner && @win == 1
-      @score = 1
-    elsif winner && @win == -1
-      @score = -1
+  private def score_move
+    if @win == 1
+      score = 1
+    elsif @win == -1
+      score = -1
     else full
-      @score = 0
+      score = 0
+    end
+    @scores << score
+  end
+
+  private def score_possible_moves
+    @moves = remaining_moves
+    @p1_turn = false
+    remaining_moves.each do |move|
+      x = x_of(move)
+      y = y_of(move)
+      @board[x][y].status = @p1_turn
+      score_move
+      break if @scores.include(-1)
+      @p1_turn = !@p1_turn
+      @board[x][y].status = nil #reset space so it's not actually marked
+      remaining_moves - [move]
     end
   end
 
@@ -118,8 +136,7 @@ class Board
     until full do
       puts "Choose a spot on the tic tac toe board."
       if @computer_game && @p1_turn == false
-        computer_turn
-        #@player2.computer_turn
+        computer_turn #@player2.computer_turn
       else
         @position = gets.chomp
       end
@@ -140,8 +157,7 @@ class Board
   end
 
   def play
-    # game = Game.new
-    # game.
+    # game = Game.new # game.
     set_up_game
     place_on_board
   end
