@@ -22,10 +22,11 @@ class Board
               # # diagonally:
               [[0, 0], [1, 1], [2, 2]], [[0, 2], [1, 1], [2, 0]]
               ]
-    @win = false
+    @win = nil
     @computer_game = false
     @position = nil
     @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
+    @score = nil
   end
 
   private def display_board
@@ -76,14 +77,14 @@ class Board
     @winning_lines.each do |line|
       if line.all?{|xy| @board[xy[0]][xy[1]].status}
         puts "#{@player1}, you've won!"
-        @win = true
+        @win = 1
         break
       elsif line.all?{|xy| @board[xy[0]][xy[1]].status == false}
         puts "#{@player2}, you've won!"
-        @win = true
+        @win = -1
         break
       else
-        @win = false
+        @win = 0
       end
     end
   end
@@ -100,6 +101,16 @@ class Board
 
   def possible_moves
     @moves -= [@position]
+  end
+
+  def score_moves
+    if winner && @win == 1
+      @score = 1
+    elsif winner && @win == -1
+      @score = -1
+    else full
+      @score = 0
+    end
   end
 
   private def place_on_board
@@ -119,7 +130,7 @@ class Board
         @board[x][y].status = @p1_turn
         take_turn
         winner
-        break if @win == true
+        break if @win == 1 || @win == -1
       elsif x && y && @board[x][y].occupied
         puts "That spot is already taken!"
       else
