@@ -1,5 +1,7 @@
 require 'byebug'
 require './position.rb'
+#require './computer_player.rb'
+require './game.rb'
 
 class Board
 
@@ -23,6 +25,7 @@ class Board
     @win = false
     @computer_game = false
     @position = nil
+    @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
   end
 
   private def display_board
@@ -44,9 +47,10 @@ class Board
       @player2 = name2
     elsif name2 == "computer"
       @player2 = "Unbeatable"
+      #ComputerPlayer.new
       @computer_game = true
     else
-      puts "Please specifiy if you are a computer or a human."
+      puts "Please specify if you are a computer or a human."
     end
   end
 
@@ -94,31 +98,40 @@ class Board
     puts @position
   end
 
+  def possible_moves
+    @moves -= [@position]
+  end
+
   private def place_on_board
     display_board
     until full do
       puts "Choose a spot on the tic tac toe board."
       if @computer_game && @p1_turn == false
         computer_turn
+        #@player2.computer_turn
       else
         @position = gets.chomp
       end
+      possible_moves
+      byebug
       x = x_of(@position)
       y = y_of(@position)
-        if x && y && @board[x][y].status == nil
-          @board[x][y].status = @p1_turn
-          take_turn
-          winner
-          break if @win == true
-        elsif x && y && @board[x][y].occupied
-          puts "That spot is already taken!"
-        else
-          puts "This spot does not exist. Sorry sucka!"
-        end
+      if x && y && @board[x][y].status == nil
+        @board[x][y].status = @p1_turn
+        take_turn
+        winner
+        break if @win == true
+      elsif x && y && @board[x][y].occupied
+        puts "That spot is already taken!"
+      else
+        puts "This spot does not exist. Sorry sucka!"
       end
+    end
   end
 
   def play
+    # game = Game.new
+    # game.
     set_up_game
     place_on_board
   end
