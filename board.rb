@@ -94,7 +94,7 @@ class Board
   end
 
   private def computer_turn
-    @position = ["A", "B", "C"].sample + ["1", "2", "3"].sample
+    @position = @moves.sample
     puts @position
   end
 
@@ -113,7 +113,6 @@ class Board
         @position = gets.chomp
       end
       possible_moves
-      byebug
       x = x_of(@position)
       y = y_of(@position)
       if x && y && @board[x][y].status == nil
