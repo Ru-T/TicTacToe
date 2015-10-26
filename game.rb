@@ -2,7 +2,13 @@ require 'byebug'
 
 class Game
 
-  attr_reader :board, :player1, :player2, :p1_turn
+  attr_reader :player1, :player2, :computer_game
+
+  def initialize
+    @player1 = player1
+    @player2 = player2
+    @computer_game = false
+  end
 
   def set_up_game
     puts "Welcome! It's time to play Tic Tac Toe."
@@ -19,7 +25,8 @@ class Game
       @player2 = "Unbeatable"
       @computer_game = true
     else
-      puts "Please specifiy if you are a computer or a human."
+      puts "Please specify if you are a computer or a human."
     end
   end
+
 end
