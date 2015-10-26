@@ -5,7 +5,7 @@ require './game.rb'
 
 class Board
 
-  attr_reader :board, :player1, :player2, :p1_turn
+  attr_reader :board, :player1, :player2, :p1_turn, :score
 
   def initialize
     @game = Game.new
@@ -20,8 +20,8 @@ class Board
               ]
     @win = nil
     @position = nil
-    @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
-    @scores = []
+    @moves = []
+    @score = score
   end
 
   private def display_board
@@ -71,41 +71,35 @@ class Board
   end
 
   private def computer_turn
-    @position = @moves.sample
+    #MISSING BIG MOVE HERE
     puts @position
   end
 
-  private def possible_moves
-    @moves -= [@position]
+  def score
+    @score ||= final_score || middle_score
   end
 
-  # private def score_move
-  #   if @win == 1
-  #     score = 1
-  #   elsif @win == -1
-  #     score = -1
-  #   else full
-  #     score = 0
-  #   end
-  #   @scores << score
-  # end
-  #
-  # private def score_possible_moves
-  #   @moves = remaining_moves
-  #   @p1_turn = false
-  #   remaining_moves.each do |move|
-  #     x = x_of(move)
-  #     y = y_of(move)
-  #     @board[x][y].status = @p1_turn
-  #     score_move
-  #     break if @scores.include(-1)
-  #     @p1_turn = !@p1_turn
-  #     @board[x][y].status = nil #reset space so it's not actually marked
-  #     remaining_moves - [move]
-  #   end
-  # end
+  def middle_score
+    scores = @moves.collect{ |scenario| scenario.score }
+    if @p1_turn == false #hardcoded that computer is player 2
+      scores.max
+    else
+      scores.min
+    end
+  end
 
-  private def place_on_board
+  private def final_score
+    if @win == 1
+      score = 1
+    elsif @win == -1
+      score = -1
+    else full
+      score = 0
+    end
+    score
+  end
+
+  private def play_game
     display_board
     until full do
       puts "Choose a spot on the tic tac toe board."
@@ -132,7 +126,7 @@ class Board
 
   def play
     @game.set_up_game
-    place_on_board
+    play_game
   end
 
 end

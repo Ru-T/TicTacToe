@@ -22,8 +22,8 @@ class Game
       puts "Player 2, please enter your name."
       name2 = gets.chomp
       @player2 = name2
-    elsif entry == "one"
-      @player2 = ComputerPlayer.new
+    elsif entry == "one" 
+      @player2 = ComputerPlayer.new("Unbeatable")
       @computer_game = true
     else
       puts "Please specify how many players: one or two."
