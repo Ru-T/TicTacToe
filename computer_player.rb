@@ -42,3 +42,8 @@ end
 #   end
 #   @score
 # end
+
+#
+# def final_state?
+#   @win == 1 || @win == -1 || full
+# end

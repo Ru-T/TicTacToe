@@ -76,11 +76,6 @@ private
     @turn += 1
   end
 
-
-  def final_state?
-    @win == 1 || @win == -1 || full
-  end
-
   def possible_moves
     @moves -= [@position]
   end
@@ -130,12 +125,6 @@ private
     @position = @moves.sample
   end
 
-  def move
-    take_turn
-    display_board
-    winner
-  end
-
   def play_game
     display_board
     until full do
@@ -151,7 +140,9 @@ private
       if x && y
         if @board[x][y].occupied == false
           @board[x][y].status = @p1_turn
-          move
+          take_turn
+          display_board
+          winner
           break if @win == 1 || @win == -1
           puts "The game is a draw." if full
         elsif @board[x][y].occupied
