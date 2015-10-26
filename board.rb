@@ -1,11 +1,10 @@
 require 'byebug'
 require './position.rb'
 require './game.rb'
-#require './computer_player.rb'
 
 class Board
 
-  attr_reader :board, :player1, :player2, :p1_turn, :score
+  attr_reader :board, :p1_turn, :score
 
   def initialize
     @game = Game.new
@@ -25,7 +24,14 @@ class Board
     @scores = []
   end
 
-  private def display_board
+  def play
+    @game.set_up_game
+    play_game
+  end
+
+private
+
+  def display_board
     @board.each do |row|
       row.each do |position|
         print "#{position}" + "|"
@@ -34,23 +40,23 @@ class Board
     end
   end
 
-  private def x_of(position)
+  def x_of(position)
     x_hash = { "A" => 0, "B" => 1, "C" => 2 }
     x_hash[position[0]]
   end
 
-  private def y_of(position)
+  def y_of(position)
     y_hash = {"1" => 0, "2" => 1, "3" => 2}
     y_hash[position[1]]
   end
 
-  private def full
+  def full
     board.all? { |row|
       row.all? { |position| position.occupied }
     }
   end
 
-  private def winner
+  def winner
     @winning_lines.each do |line|
       if line.all?{|xy| @board[xy[0]][xy[1]].status}
         puts "#{@game.player1}, you've won!"
@@ -66,28 +72,26 @@ class Board
     end
   end
 
-  private def take_turn
+  def take_turn
     @p1_turn = !@p1_turn
-    display_board
   end
 
-  private def computer_turn
+  def computer_turn
     middle_score
     @position = @scores.min
-    byebug
     puts @position
   end
 
   def middle_score
     @scores = @moves.collect{ |scenario| scenario.score }
-    if @p1_turn == false #hardcoded that computer is player 2
+    if @p1_turn #hardcoded that computer is player 2
       @scores.max
     else
       @scores.min
     end
   end
 
-  private def final_score
+  def final_score
     if @win == 1
       @score = 1
     elsif @win == -1
@@ -102,7 +106,7 @@ class Board
     @score ||= final_score || middle_score
   end
 
-  private def play_game
+  def play_game
     display_board
     until full do
       puts "Choose a spot on the tic tac toe board."
@@ -116,6 +120,7 @@ class Board
       if x && y && @board[x][y].status == nil
         @board[x][y].status = @p1_turn
         take_turn
+        display_board
         winner
         break if @win == 1 || @win == -1
       elsif x && y && @board[x][y].occupied
@@ -124,11 +129,6 @@ class Board
         puts "This spot does not exist. Sorry sucka!"
       end
     end
-  end
-
-  def play
-    @game.set_up_game
-    play_game
   end
 
 end
