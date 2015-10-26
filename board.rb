@@ -22,6 +22,7 @@ class Board
     @position = nil
     @moves = []
     @score = score
+    @scores = []
   end
 
   private def display_board
@@ -71,32 +72,34 @@ class Board
   end
 
   private def computer_turn
-    #MISSING BIG MOVE HERE
+    middle_score
+    @position = @scores.min
+    byebug
     puts @position
   end
 
-  def score
-    @score ||= final_score || middle_score
-  end
-
   def middle_score
-    scores = @moves.collect{ |scenario| scenario.score }
+    @scores = @moves.collect{ |scenario| scenario.score }
     if @p1_turn == false #hardcoded that computer is player 2
-      scores.max
+      @scores.max
     else
-      scores.min
+      @scores.min
     end
   end
 
   private def final_score
     if @win == 1
-      score = 1
+      @score = 1
     elsif @win == -1
-      score = -1
+      @score = -1
     else full
-      score = 0
+      @score = 0
     end
-    score
+    @score
+  end
+
+  def score
+    @score ||= final_score || middle_score
   end
 
   private def play_game
@@ -108,7 +111,6 @@ class Board
       else
         @position = gets.chomp
       end
-      possible_moves
       x = x_of(@position)
       y = y_of(@position)
       if x && y && @board[x][y].status == nil
