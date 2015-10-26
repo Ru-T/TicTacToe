@@ -20,6 +20,7 @@ class Board
     @win = nil
     @position = nil
     @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
+    @turn = 0
   end
 
   def play
@@ -72,6 +73,7 @@ private
 
   def take_turn
     @p1_turn = !@p1_turn
+    @turn += 1
   end
 
 
@@ -84,35 +86,48 @@ private
   end
 
   def computer_turn
-    @position = minimax #should be @next_move
+    first_move || random_move #|| winning_move || blocking_move
     puts @position
   end
 
-  def minimax
-    scores = {}
-    @moves.each do |move|
-      x = x_of(move)
-      y = y_of(move)
-      @board[x][y].status = @p1_turn
-      take_turn
-      if final_state?
-        final_score
-        scores[move] = @score
+  def first_move
+    if @turn == 1
+      if @board[1][1].occupied == false
+        @position = "B2"
+      elsif @board[1][1].occupied
+        @position = "A1"
       end
-      min = scores.values.min
-      scores.key(min)
     end
   end
 
-  def final_score
-    if @win == 1
-      @score = 1
-    elsif @win == -1
-      @score = -1
-    else full
-      @score = 0
+  def winning_move
+    check_for_win = []
+    @winning_lines.each do |line|
+      line.each do |position|
+        if position.any?{|xy| @board[xy[0]][xy[1]].status == false}
+          check_for_win << position
+          break if check_for_win.length == 2
+        end
+      end
     end
-    @score
+    check_for_win
+  end
+
+  def blocking_move
+    check_for_win = []
+    @winning_lines.each do |line|
+      line.each do |position|
+        if position.any?{|xy| @board[xy[0]][xy[1]].status}
+          check_for_win << position
+          break if check_for_win.length == 2
+        end
+      end
+    end
+      check_for_win
+  end
+
+  def random_move
+    @position = @moves.sample
   end
 
   def move
