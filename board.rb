@@ -1,7 +1,6 @@
 require 'byebug'
 require './position.rb'
 require './game.rb'
-# require './computer_player.rb'
 
 class Board
 
@@ -85,23 +84,23 @@ private
   end
 
   def computer_turn
-    @position = @next_move
+    @position = minimax #should be @next_move
     puts @position
   end
 
   def minimax
     scores = {}
-    return final_score if final_state? # should this be inside the loop?
     @moves.each do |move|
       x = x_of(move)
       y = y_of(move)
       @board[x][y].status = @p1_turn
       take_turn
-      if @p1_turn
-        scores[move] = scores.values.max
-      else
-        scores[move] = scores.values.min
+      if final_state?
+        final_score
+        scores[move] = @score
       end
+      min = scores.values.min
+      scores.key(min)
     end
   end
 
@@ -116,8 +115,10 @@ private
     @score
   end
 
-  def score
-    @score ||= final_score || middle_score
+  def move
+    take_turn
+    display_board
+    winner
   end
 
   def play_game
@@ -133,11 +134,9 @@ private
       x = x_of(@position)
       y = y_of(@position)
       if x && y
-        if @board[x][y].status == nil
+        if @board[x][y].occupied == false
           @board[x][y].status = @p1_turn
-          take_turn
-          display_board
-          winner
+          move
           break if @win == 1 || @win == -1
           puts "The game is a draw." if full
         elsif @board[x][y].occupied
