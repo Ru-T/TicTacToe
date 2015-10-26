@@ -110,7 +110,7 @@ class Board
     until full do
       puts "Choose a spot on the tic tac toe board."
       if @game.computer_game && @p1_turn == false
-        computer_turn #@player2.computer_turn
+        computer_turn
       else
         @position = gets.chomp
       end

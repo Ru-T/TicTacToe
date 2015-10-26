@@ -14,17 +14,14 @@ class Game
     puts "Welcome! It's time to play Tic Tac Toe."
     puts "How many human players: one or two?"
     entry = gets.chomp
+    puts "Player 1, please enter your name."
+    name1 = gets.chomp
+    @player1 = name1
     if entry == "two"
-      puts "Player 1, please enter your name."
-      name1 = gets.chomp
-      @player1 = name1
       puts "Player 2, please enter your name."
       name2 = gets.chomp
       @player2 = name2
     elsif entry == "one"
-      puts "Player 1, please enter your name."
-      name1 = gets.chomp
-      @player1 = name1
       @player2 = "Unbeatable"
       @computer_game = true
     else
