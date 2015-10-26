@@ -1,4 +1,5 @@
 require 'byebug'
+require './computer_player.rb'
 
 class Game
 
@@ -22,10 +23,10 @@ class Game
       name2 = gets.chomp
       @player2 = name2
     elsif entry == "one"
-      @player2 = "Unbeatable"
+      @player2 = ComputerPlayer.new
       @computer_game = true
     else
-      puts "Please specify how many players: 1 or 2."
+      puts "Please specify how many players: one or two."
     end
   end
 
