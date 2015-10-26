@@ -21,6 +21,7 @@ class Board
     @position = nil
     @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
     @turn = 0
+    @block_move = nil
   end
 
   def play
@@ -81,7 +82,7 @@ private
   end
 
   def computer_turn
-    first_move || random_move # || second_move || || winning_move || blocking_move
+    first_move || second_move || blocking_move #|| random_move || winning_move
     puts @position
   end
 
@@ -91,47 +92,64 @@ private
     end
   end
 
-  # def winning_move
-  #   @winning_lines.each do |line|
-  #     check_for_win = []
-  #     line.each do |position|
-  #       if position.any? {|xy| @board[xy[0]][xy[1]].status == false}
-  #         check_for_win << position
-  #         return line - check_for_win if check_for_win.length == 2
-  #       end
-  #     end
-  #   end
-  # end
+  def second_move
+    if @turn == 2
+      if @board[1][0].occupied || @board[2][0].occupied
+        @position = "A3"
+      elsif @board[0][1].occupied || @board[0][2].occupied
+        @position = "C1"
+      elsif @board[1][2].occupied || @board[2][1].occupied || @board[2][2].occupied
+        @position = "A1"
+      else @board[0][0].occupied
+        @position = "C3"
+      end
+    end
+  end
+
+  def blocking_move
+    @winning_lines.each do |line|
+      check_for_block = []
+      line.each do |position|
+        if position.any? {|xy| @board[xy[0]][xy[1]].status == false}
+          check_for_block << position
+          if check_for_block.length == 2
+            @block_move = line - check_for_block
+            break
+          end
+        end
+      end
+    end
+  end
 
   def random_move
     @position = @moves.sample
   end
 
   def play_game
-     display_board
-     until full do
-       puts "Choose a spot on the tic tac toe board."
-       if @game.computer_game && @p1_turn
-         computer_turn
-       else
-         @position = gets.chomp
-       end
-       x = x_of(@position)
-       y = y_of(@position)
-       if x && y
-         if @board[x][y].status == nil
-           @board[x][y].status = @p1_turn
-           take_turn
-           display_board
-           winner
-           break if @win == 1 || @win == -1
-         elsif @board[x][y].occupied
-           puts "That spot is already taken!"
-         end
-       else
-         puts "This spot does not exist. Sorry sucka!"
-       end
-     end
-   end
+    display_board
+    until full do
+      puts "Choose a spot on the tic tac toe board."
+      if @game.computer_game && @p1_turn
+        computer_turn
+      else
+        @position = gets.chomp
+      end
+      x = x_of(@position)
+      y = y_of(@position)
+      if x && y
+        if @board[x][y].status == nil
+          @board[x][y].status = @p1_turn
+          take_turn
+          display_board
+          winner
+          break if @win == 1 || @win == -1
+        elsif @board[x][y].occupied
+          puts "That spot is already taken!"
+        end
+      else
+        puts "This spot does not exist. Sorry sucka!"
+      end
+    end
+  end
 
 end
