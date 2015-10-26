@@ -10,8 +10,8 @@
 # ComputerPlayer doesn't have a name
 # Refactor x && y && part of if statement - big if/else and mini inside
 
-# Task List
-#
+# TASK LIST
+
 # [ X ] Create empty tic tac toe board
 # [ X ] User should be asked for a location (A1, A2 etc.)
 # [ X ] When user enters location, X is marked not he board.
@@ -26,14 +26,16 @@
 # [ X ] Create the concept of a computer player.
 # [ X ] If the computer is playing, choose a random position. (dumb computer)
 # [ X ] Either computer or human can win.
-# Unbeatable
-#
+
+# UNBEATABLE
+
 # [ X ] Create concept of possible remaining moves.
 # [ X ] Create concept of score when win, lose, draw.
 # [   ] Create decision tree from each remaining move.
 # [   ] Computer chooses move with min score (same index.)
+# [   ] Add the concept of depth so player isn't fatalist
 # [   ] Optimize - stop minimax when a move returns first loss.
-#
+
 # BUGS
-#
+
 # [   ] Computer player does not have a name

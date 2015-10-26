@@ -1,6 +1,7 @@
 require 'byebug'
 require './position.rb'
 require './game.rb'
+# require './computer_player.rb'
 
 class Board
 
@@ -83,7 +84,8 @@ private
   end
 
   def middle_score
-    @scores = @moves.collect{ |scenario| scenario.score }
+    moves = []
+    @scores = moves.collect{ |scenario| scenario.score }
     if @p1_turn #hardcoded that computer is player 2
       @scores.max
     else
@@ -117,14 +119,16 @@ private
       end
       x = x_of(@position)
       y = y_of(@position)
-      if x && y && @board[x][y].status == nil
-        @board[x][y].status = @p1_turn
-        take_turn
-        display_board
-        winner
-        break if @win == 1 || @win == -1
-      elsif x && y && @board[x][y].occupied
-        puts "That spot is already taken!"
+      if x && y
+        if @board[x][y].status == nil
+          @board[x][y].status = @p1_turn
+          take_turn
+          display_board
+          winner
+          break if @win == 1 || @win == -1
+        elsif @board[x][y].occupied
+          puts "That spot is already taken!"
+        end
       else
         puts "This spot does not exist. Sorry sucka!"
       end

@@ -10,7 +10,7 @@ class Game
     @player2 = player2
     @computer_game = false
   end
-
+  
   def set_up_game
     puts "Welcome! It's time to play Tic Tac Toe."
     puts "How many human players: one or two?"
@@ -22,7 +22,7 @@ class Game
       puts "Player 2, please enter your name."
       name2 = gets.chomp
       @player2 = name2
-    elsif entry == "one" 
+    elsif entry == "one"
       @player2 = ComputerPlayer.new("Unbeatable")
       @computer_game = true
     else
