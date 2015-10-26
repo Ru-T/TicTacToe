@@ -7,6 +7,7 @@ class Board
   attr_reader :board, :p1_turn, :win, :position, :moves
 
   def initialize
+    @game = Game.new
     @board = [[Position.new, Position.new, Position.new],
              [Position.new, Position.new, Position.new],
              [Position.new, Position.new, Position.new]]
@@ -20,6 +21,11 @@ class Board
     @position = nil
     @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
     @turn = 0
+  end
+
+  def play
+    @game.set_up_game
+    play_game
   end
 
 private
@@ -75,19 +81,27 @@ private
   end
 
   def computer_turn
-    first_move || random_move #|| winning_move || blocking_move
+    first_move || random_move # || second_move || || winning_move || blocking_move
     puts @position
   end
 
   def first_move
-    if @turn == 1
-      if @board[1][1].occupied == false
-        @position = "B2"
-      elsif @board[1][1].occupied
-        @position = "A1"
-      end
+    if @turn == 0
+      @position = "B2"
     end
   end
+
+  # def winning_move
+  #   @winning_lines.each do |line|
+  #     check_for_win = []
+  #     line.each do |position|
+  #       if position.any? {|xy| @board[xy[0]][xy[1]].status == false}
+  #         check_for_win << position
+  #         return line - check_for_win if check_for_win.length == 2
+  #       end
+  #     end
+  #   end
+  # end
 
   def random_move
     @position = @moves.sample
@@ -97,7 +111,7 @@ private
      display_board
      until full do
        puts "Choose a spot on the tic tac toe board."
-       if @game.computer_game && @p1_turn == false
+       if @game.computer_game && @p1_turn
          computer_turn
        else
          @position = gets.chomp

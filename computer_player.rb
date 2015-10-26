@@ -10,44 +10,41 @@ class ComputerPlayer
   end
 
 end
-#
-# def computer_turn
-#   @position = minimax #should be @next_move
+
+# def possible_moves
+#   @moves.delete(@position)
+# end
+
+  # @turn = 0
+  # @turn += 1
+
+  # def computer_turn
+#   first_move || random_move # || winning_move || blocking_move
 #   puts @position
 # end
 #
-# def minimax
-#   scores = {}
-#   @moves.each do |move|
-#     x = x_of(move)
-#     y = y_of(move)
-#     @board[x][y].status = @p1_turn
-#     take_turn
-#     if final_state?
-#       final_score
-#       scores[move] = @score
+# def first_move
+#   if @turn == 1
+#     if @board[1][1].occupied == false
+#       @position = "B2"
+#     elsif @board[1][1].occupied
+#       @position = "A1"
 #     end
-#     if @p1_turn
-#       max
-#     else
-#       min = scores.values.min
+#   end
+# end
+
+# def winning_move
+#   @winning_lines.each do |line|
+#     check_for_win = []
+#     line.each do |position|
+#       if position.any? {|xy| @board[xy[0]][xy[1]].status == false}
+#         check_for_win << position
+#         return line - check_for_win if check_for_win.length == 2
+#       end
 #     end
-#     scores.key(min)
 #   end
-#   minimax
 # end
-#
-# def final_score
-#   if @win == 1
-#     @score = 1
-#   elsif @win == -1
-#     @score = -1
-#   else full
-#     @score = 0
-#   end
-#   @score
-# end
-#
-# def final_state?
-#   @win == 1 || @win == -1 || full
+
+# def random_move
+#   @position = @moves.sample
 # end
