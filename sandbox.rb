@@ -1,7 +1,7 @@
 # ISSUES:
 
-# middle_score method: how do I define scenario? What about when @moves is empty?
 # recursive method - is this doing what I think it's doing?
+# middle_score method: how do I define scenario? What about when @moves is empty?
 # alternate solution: does this have legs?
 # TESTS!!!!
 # Refactor in multiple classes
@@ -9,46 +9,32 @@
 # play_game method: can this be improved?
 # ComputerPlayer doesn't have a name
 
+# A different approach:
+# The computer should assess the board and move accordingly.
+# 1) Take the center if it's not yet taken
+# OR
+# 2) Go for win (row, column, diagonal)
+# OR
+# 3) Preemptive block (row, column, diaganol)
+# OR
+# 4) Random move
 
-  # def score_possible_moves # call this when computer_turn
-  #   @moves = ["A1", "A2", "A3"] #etc.
-  #   @moves = remaining_moves
-  #   remaining_moves.each do |move|
-  #     x = x_of(move)
-  #     y = y_of(move)
-  #     @board[x][y].status = @p1_turn
-  #     if final_state?
-  #       final_score
-  #     end
-  #     break if @scores.include(-1)
-  #     @p1_turn = !@p1_turn
-  #     remaining_moves - [move]
+  # @moves = []
+  # @score = score
+  # @scores = []
+  #
+  # def middle_score
+  #   moves = []
+  #   @scores = moves.collect{ |scenario| scenario.score } #DEFINE SCENARIO!
+  #   if @p1_turn #hardcoded that computer is player 2
+  #     @scores.max
+  #   else
+  #     @scores.min
   #   end
-  #   @board[x][y].status = nil #wrong place but reset space so it's not actually marked
   # end
   #
-  # def final_state?
-  #   @win == 1 || @win == -1 || full
-  # end
-  #
-  # def final_score
-  #   if @win == 1
-  #     score = 1
-  #   elsif @win == -1
-  #     score = -1
-  #   else full
-  #     score = 0
-  #   end
-  #   @scores << score
-  # end
-
-  # @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
-
-  #  def computer_turn
-  #   @position = @moves.sample
+  # def computer_turn
+  #   middle_score
+  #   @position = @scores.min
   #   puts @position
-  # end
-  #
-  # def possible_moves
-  #   @moves -= [@position]
   # end

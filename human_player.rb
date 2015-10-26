@@ -1,6 +1,6 @@
 require 'byebug'
 
-class ComputerPlayer
+class HumanPlayer
 
   attr_reader :name
 

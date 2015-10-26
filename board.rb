@@ -5,7 +5,7 @@ require './game.rb'
 
 class Board
 
-  attr_reader :board, :p1_turn, :score
+  attr_reader :board, :p1_turn, :win, :position, :moves
 
   def initialize
     @game = Game.new
@@ -20,9 +20,7 @@ class Board
               ]
     @win = nil
     @position = nil
-    @moves = []
-    @score = score
-    @scores = []
+    @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
   end
 
   def play
@@ -60,11 +58,11 @@ private
   def winner
     @winning_lines.each do |line|
       if line.all?{|xy| @board[xy[0]][xy[1]].status}
-        puts "#{@game.player1}, you've won!"
+        puts "#{@game.player1.name}, you've won!"
         @win = 1
         break
       elsif line.all?{|xy| @board[xy[0]][xy[1]].status == false}
-        puts "#{@game.player2}, you've won!"
+        puts "#{@game.player2.name}, you've won!"
         @win = -1
         break
       else
@@ -77,19 +75,33 @@ private
     @p1_turn = !@p1_turn
   end
 
+
+  def final_state?
+    @win == 1 || @win == -1 || full
+  end
+
+  def possible_moves
+    @moves -= [@position]
+  end
+
   def computer_turn
-    middle_score
-    @position = @scores.min
+    @position = @next_move
     puts @position
   end
 
-  def middle_score
-    moves = []
-    @scores = moves.collect{ |scenario| scenario.score } #DEFINE SCENARIO!
-    if @p1_turn #hardcoded that computer is player 2
-      @scores.max
-    else
-      @scores.min
+  def minimax
+    scores = {}
+    return final_score if final_state? # should this be inside the loop?
+    @moves.each do |move|
+      x = x_of(move)
+      y = y_of(move)
+      @board[x][y].status = @p1_turn
+      take_turn
+      if @p1_turn
+        scores[move] = scores.values.max
+      else
+        scores[move] = scores.values.min
+      end
     end
   end
 
@@ -117,7 +129,7 @@ private
       else
         @position = gets.chomp
       end
-      # possible_moves
+      possible_moves
       x = x_of(@position)
       y = y_of(@position)
       if x && y
@@ -127,6 +139,7 @@ private
           display_board
           winner
           break if @win == 1 || @win == -1
+          puts "The game is a draw." if full
         elsif @board[x][y].occupied
           puts "That spot is already taken!"
         end
@@ -134,7 +147,6 @@ private
         puts "This spot does not exist. Sorry sucka!"
       end
     end
-    puts "The game is a draw - neither player has won."
   end
 
 end
