@@ -14,11 +14,8 @@ class Board
              [Position.new, Position.new, Position.new]]
     @p1_turn = true
     @winning_lines = [
-              # horizontally:
               [[0, 0], [0, 1], [0, 2]], [[1, 0], [1, 1], [1, 2]], [[2, 0], [2, 1], [2, 2]],
-              # vertically:
               [[0, 0], [1, 0], [2, 0]], [[0, 1], [1, 1], [2, 1]], [[0, 2], [1, 2], [2, 2]],
-              # diagonally:
               [[0, 0], [1, 1], [2, 2]], [[0, 2], [1, 1], [2, 0]]
               ]
     @win = nil
@@ -46,7 +43,7 @@ class Board
     y_hash[position[1]]
   end
 
-  private def full # You can get this on one line
+  private def full
     board.all? { |row|
       row.all? { |position| position.occupied }
     }
