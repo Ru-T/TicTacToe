@@ -85,7 +85,7 @@ private
 
   def middle_score
     moves = []
-    @scores = moves.collect{ |scenario| scenario.score }
+    @scores = moves.collect{ |scenario| scenario.score } #DEFINE SCENARIO!
     if @p1_turn #hardcoded that computer is player 2
       @scores.max
     else
@@ -117,6 +117,7 @@ private
       else
         @position = gets.chomp
       end
+      # possible_moves
       x = x_of(@position)
       y = y_of(@position)
       if x && y
@@ -133,6 +134,7 @@ private
         puts "This spot does not exist. Sorry sucka!"
       end
     end
+    puts "The game is a draw - neither player has won."
   end
 
 end
