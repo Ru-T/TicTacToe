@@ -16,9 +16,6 @@ class BoardTest < Minitest::Test
     board = Board.new
 
     assert board.play
-
-
-    
   end
 
   def test_human_place_on_board

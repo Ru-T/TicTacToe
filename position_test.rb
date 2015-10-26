@@ -11,6 +11,4 @@ class PositionTest < Minitest::Test
     assert Position
   end
 
-
-
 end

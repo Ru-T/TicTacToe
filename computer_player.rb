@@ -10,7 +10,7 @@ class ComputerPlayer
   end
 
 end
-
+#
 # def computer_turn
 #   @position = minimax #should be @next_move
 #   puts @position
@@ -27,9 +27,14 @@ end
 #       final_score
 #       scores[move] = @score
 #     end
-#     min = scores.values.min
+#     if @p1_turn
+#       max
+#     else
+#       min = scores.values.min
+#     end
 #     scores.key(min)
 #   end
+#   minimax
 # end
 #
 # def final_score
@@ -42,7 +47,6 @@ end
 #   end
 #   @score
 # end
-
 #
 # def final_state?
 #   @win == 1 || @win == -1 || full

@@ -77,7 +77,7 @@ private
   end
 
   def possible_moves
-    @moves -= [@position]
+    @moves.delete(@position)
   end
 
   def computer_turn
@@ -95,31 +95,33 @@ private
     end
   end
 
-  def winning_move
-    check_for_win = []
-    @winning_lines.each do |line|
-      line.each do |position|
-        if position.any?{|xy| @board[xy[0]][xy[1]].status == false}
-          check_for_win << position
-          break if check_for_win.length == 2
-        end
-      end
-    end
-    check_for_win
-  end
-
-  def blocking_move
-    check_for_win = []
-    @winning_lines.each do |line|
-      line.each do |position|
-        if position.any?{|xy| @board[xy[0]][xy[1]].status}
-          check_for_win << position
-          break if check_for_win.length == 2
-        end
-      end
-    end
-      check_for_win
-  end
+  # def winning_move
+  #   @winning_lines.each do |line|
+  #     check_for_win = []
+  #     line.each do |position|
+  #       if position.any? {|xy| @board[xy[0]][xy[1]].status == false}
+  #         check_for_win << position
+  #         if check_for_win.length == 2
+  #           @position = line - check_for_win
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
+  #
+  # def blocking_move
+  #   @winning_lines.each do |line|
+  #     check_for_win = []
+  #     line.each do |position|
+  #       if position.any? {|xy| @board[xy[0]][xy[1]].status}
+  #         check_for_win << position
+  #         if check_for_win.length == 2
+  #           return line - check_for_win
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
   def random_move
     @position = @moves.sample

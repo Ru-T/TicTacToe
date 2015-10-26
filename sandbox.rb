@@ -1,8 +1,8 @@
 # ISSUES:
 
+# alternate solution below: does this have legs?
 # recursive method - is this doing what I think it's doing?
 # middle_score method: how do I define scenario? What about when @moves is empty?
-# alternate solution below: does this have legs?
 # TESTS!!!!
 # Refactor in multiple classes
 # winner method: do I need @win to pass back who won? do I need both @win and @score??
