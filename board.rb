@@ -1,13 +1,14 @@
 require 'byebug'
 require './position.rb'
-#require './computer_player.rb'
 require './game.rb'
+#require './computer_player.rb'
 
 class Board
 
   attr_reader :board, :player1, :player2, :p1_turn
 
   def initialize
+    @game = Game.new
     @board = [[Position.new, Position.new, Position.new],
              [Position.new, Position.new, Position.new],
              [Position.new, Position.new, Position.new]]
@@ -24,7 +25,6 @@ class Board
     @position = nil
     @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
     @scores = []
-    @game = Game.new
   end
 
   private def display_board
@@ -47,11 +47,9 @@ class Board
   end
 
   private def full # You can get this on one line
-    board.all? do |row|
-      row.all? do |position|
-        position.occupied
-      end
-    end
+    board.all? { |row|
+      row.all? { |position| position.occupied }
+    }
   end
 
   private def winner
