@@ -95,9 +95,7 @@ private
   end
 
   def first_move
-    if @turn == 0
-      @position = "B2"
-    end
+    @position = "B2" if @turn == 0
   end
 
   def second_move
@@ -128,6 +126,7 @@ private
       end
     end
     @position = get_position(@block_move) if @block_move
+    @block_move = nil
   end
 
   def random_move
@@ -151,6 +150,7 @@ private
           take_turn
           display_board
           winner
+          possible_moves
           break if @win == 1 || @win == -1
         elsif @board[x][y].occupied
           puts "That spot is already taken!"
