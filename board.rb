@@ -4,7 +4,7 @@ require './game.rb'
 
 class Board
 
-  attr_reader :board, :p1_turn, :win, :moves, :turn
+  attr_reader :board, :moves, :winning_lines
 
   def initialize
     @game = Game.new
@@ -19,8 +19,6 @@ class Board
               ]
     @win = nil
     @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
-    @turn = 0
-    @block_move = nil
   end
 
   def play
@@ -81,55 +79,11 @@ private
 
   def take_turn
     @p1_turn = !@p1_turn
-    @turn += 1
+    display_board
   end
 
   def possible_moves(move)
     @moves.delete(move)
-  end
-
-  def computer_turn #hard-coded
-    first_move || second_move || blocking_move || random_move
-  end
-
-  def first_move
-    "B2" if @turn == 0 #hard-coded
-  end
-
-  def second_move #hard-coded
-    if @turn == 2
-      if @board[1][0].occupied || @board[2][0].occupied
-        "A3"
-      elsif @board[0][1].occupied || @board[0][2].occupied
-        "C1"
-      elsif @board[1][2].occupied || @board[2][1].occupied || @board[2][2].occupied
-        "A1"
-      else @board[0][0].occupied
-        "C3"
-      end
-    end
-  end
-
-  def blocking_move
-    @winning_lines.each do |line|
-      check_for_block = []
-      line.each do |xy|
-        if @board[xy[0]][xy[1]].status == false
-          check_for_block << xy
-        end
-        if check_for_block.length == 2
-          @block_move = line - check_for_block
-          break
-        end
-      end
-    end
-    if @board[@block_move[0][0]][@block_move[0][1]].occupied == false
-      get_coordinates(@block_move)
-    end
-  end
-
-  def random_move
-    @moves.sample
   end
 
   def play_game
@@ -137,7 +91,7 @@ private
     until full do
       puts "Choose a move on the tic tac toe board."
       if @game.computer_game && @p1_turn
-        move = computer_turn # this is hard-coded
+        move = @game.player1.computer_turn # this is hard-coded
       else
         move = gets.chomp
       end
@@ -147,10 +101,9 @@ private
         if @board[x][y].occupied == false
           @board[x][y].status = @p1_turn
           take_turn
-          display_board
           possible_moves(move)
-          winner
-          break if @win == 1 || @win == -1
+          winner #refactor to break if winner, get rid of @win
+          break if @win != 0
         elsif @board[x][y].occupied
           puts "That spot is already taken!"
         end
