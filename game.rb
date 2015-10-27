@@ -4,13 +4,12 @@ require './human_player.rb'
 
 class Game
 
-  attr_reader :player1, :player2, :computer_game, :win, :moves
+  attr_reader :player1, :player2, :computer_game
 
   def initialize
     @board = Board.new
     @computer_game = false
     @p1_turn = true
-    @win = nil
   end
 
   def play
@@ -48,15 +47,13 @@ class Game
   def winner
     @board.winning_lines.each do |line|
       if line.all?{|xy| @board.board[xy[0]][xy[1]].status}
-        puts "#{@player1.name} won!" #hard-coded
-        @win = 1
-        break
+        puts "#{@player1.name} won!"
+        return true
       elsif line.all?{|xy| @board.board[xy[0]][xy[1]].status == false}
-        puts "#{@player2.name} won!" #hard-coded
-        @win = -1
-        break
+        puts "#{@player2.name} won!"
+        return true
       else
-        @win = 0
+        return false
       end
     end
   end
@@ -77,8 +74,7 @@ class Game
           @board.board[x][y].status = @p1_turn
           take_turn
           @board.open_spots(move)
-          winner #refactor to break if winner, get rid of @win
-          break if @win != 0
+          break if winner == true
         elsif @board.board[x][y].occupied
           puts "That spot is already taken!"
         end
@@ -86,7 +82,7 @@ class Game
         puts "This spot does not exist. Sorry sucka!"
       end
     end
-    if @board.full && @win == 0
+    if @board.full && winner == false
       puts "The game is a draw."
     end
   end

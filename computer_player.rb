@@ -54,9 +54,11 @@ class ComputerPlayer
         end
       end
     end
-    if @board.board[@block_move[0][0]][@block_move[0][1]].occupied == false
-      @board.get_coordinates(@block_move)
-    end
+    if @block_move
+      if @board.board[@block_move[0][0]][@block_move[0][1]].occupied == false
+        @board.get_position(@block_move)
+      end
+    end    
   end
 
   def random_move

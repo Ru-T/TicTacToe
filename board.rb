@@ -27,6 +27,12 @@ class Board
     end
   end
 
+  def full
+    board.all? { |row|
+      row.all? { |position| position.occupied }
+    }
+  end
+
   def x_of(letter)
     x_hash = { "A" => 0, "B" => 1, "C" => 2 }
     x_hash[letter[0]]
@@ -37,7 +43,7 @@ class Board
     y_hash[number[1]]
   end
 
-  def get_coordinates(xy)
+  def get_position(xy)
     letter_hash = { 0 => "A", 1 => "B", 2 => "C" }
     letter = letter_hash[xy[0][0]]
     number_hash = {0 => "1", 1 => "2", 2 => "3" }
@@ -47,12 +53,6 @@ class Board
 
   def open_spots(move)
     @spots.delete(move)
-  end
-
-  def full
-    board.all? { |row|
-      row.all? { |position| position.occupied }
-    }
   end
 
 end
