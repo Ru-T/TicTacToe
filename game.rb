@@ -4,12 +4,12 @@ require './human_player.rb'
 
 class Game
 
-  attr_reader :player1, :player2, :computer_game, :win
+  attr_reader :player1, :player2, :computer_game, :win, :moves
 
   def initialize
+    @board = Board.new
     @computer_game = false
     @p1_turn = true
-    @board = Board.new
     @win = nil
   end
 
@@ -76,7 +76,7 @@ class Game
         if @board.board[x][y].occupied == false
           @board.board[x][y].status = @p1_turn
           take_turn
-          @board.possible_moves(move)
+          @board.open_spots(move)
           winner #refactor to break if winner, get rid of @win
           break if @win != 0
         elsif @board.board[x][y].occupied

@@ -3,7 +3,7 @@ require './board.rb'
 
 class ComputerPlayer
 
-  attr_reader :name, :board
+  attr_reader :board, :name
 
   def initialize(name, board)
     @name = name
@@ -46,23 +46,21 @@ class ComputerPlayer
       check_for_block = []
       line.each do |xy|
         if @board.board[xy[0]][xy[1]].status == false
-          byebug
           check_for_block << xy
           if check_for_block.length == 2
-            block_move = line - check_for_block
+            @block_move = line - check_for_block
             break
           end
         end
       end
     end
-    if @board.board[block_move[0][0]][block_move[0][1]].occupied == false
-      @board.get_coordinates(block_move)
+    if @board.board[@block_move[0][0]][@block_move[0][1]].occupied == false
+      @board.get_coordinates(@block_move)
     end
-    block_move
   end
 
   def random_move
-    @board.moves.sample
+    @board.spots.sample
   end
 
 end

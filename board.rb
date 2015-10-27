@@ -4,7 +4,7 @@ require './game.rb'
 
 class Board
 
-  attr_reader :board, :moves, :winning_lines
+  attr_reader :board, :winning_lines, :spots
 
   def initialize
     @board = [[Position.new, Position.new, Position.new],
@@ -15,7 +15,7 @@ class Board
               [[0, 0], [1, 0], [2, 0]], [[0, 1], [1, 1], [2, 1]], [[0, 2], [1, 2], [2, 2]],
               [[0, 0], [1, 1], [2, 2]], [[0, 2], [1, 1], [2, 0]]
               ]
-    @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
+    @spots = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
   end
 
   def display_board
@@ -45,14 +45,14 @@ class Board
     "#{letter}" + "#{number}"
   end
 
+  def open_spots(move)
+    @spots.delete(move)
+  end
+
   def full
     board.all? { |row|
       row.all? { |position| position.occupied }
     }
-  end
-
-  def possible_moves(move)
-    @moves.delete(move)
   end
 
 end
