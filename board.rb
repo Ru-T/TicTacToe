@@ -7,26 +7,16 @@ class Board
   attr_reader :board, :moves, :winning_lines
 
   def initialize
-    @game = Game.new
     @board = [[Position.new, Position.new, Position.new],
              [Position.new, Position.new, Position.new],
              [Position.new, Position.new, Position.new]]
-    @p1_turn = true
     @winning_lines = [
               [[0, 0], [0, 1], [0, 2]], [[1, 0], [1, 1], [1, 2]], [[2, 0], [2, 1], [2, 2]],
               [[0, 0], [1, 0], [2, 0]], [[0, 1], [1, 1], [2, 1]], [[0, 2], [1, 2], [2, 2]],
               [[0, 0], [1, 1], [2, 2]], [[0, 2], [1, 1], [2, 0]]
               ]
-    @win = nil
     @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
   end
-
-  def play
-    @game.set_up_game
-    play_game
-  end
-
-private
 
   def display_board
     @board.each do |row|
@@ -61,59 +51,8 @@ private
     }
   end
 
-  def winner
-    @winning_lines.each do |line|
-      if line.all?{|xy| @board[xy[0]][xy[1]].status}
-        puts "#{@game.player1.name} won!" #hard-coded
-        @win = 1
-        break
-      elsif line.all?{|xy| @board[xy[0]][xy[1]].status == false}
-        puts "#{@game.player2.name} won!" #hard-coded
-        @win = -1
-        break
-      else
-        @win = 0
-      end
-    end
-  end
-
-  def take_turn
-    @p1_turn = !@p1_turn
-    display_board
-  end
-
   def possible_moves(move)
     @moves.delete(move)
-  end
-
-  def play_game
-    display_board
-    until full do
-      puts "Choose a move on the tic tac toe board."
-      if @game.computer_game && @p1_turn
-        move = @game.player1.computer_turn # this is hard-coded
-      else
-        move = gets.chomp
-      end
-      x = x_of(move)
-      y = y_of(move)
-      if x && y
-        if @board[x][y].occupied == false
-          @board[x][y].status = @p1_turn
-          take_turn
-          possible_moves(move)
-          winner #refactor to break if winner, get rid of @win
-          break if @win != 0
-        elsif @board[x][y].occupied
-          puts "That spot is already taken!"
-        end
-      else
-        puts "This spot does not exist. Sorry sucka!"
-      end
-    end
-    if full && @win == 0
-      puts "The game is a draw."
-    end
   end
 
 end

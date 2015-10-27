@@ -1,5 +1,5 @@
 require './board'
 
-board = Board.new
+game = Game.new
 
-board.play
+game.play
