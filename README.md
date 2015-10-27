@@ -19,11 +19,15 @@
 
 [ X ] Create concept of possible remaining moves.
 [ X ] Create concept of score when win, lose, draw.
+
+## REFACTOR
+
+[   ] Refactor such that either human or computer can go first.
+[   ] Refactor such that board can be set to any grid size.
+
+## MINIMAX (LATER)
+
 [   ] Create decision tree from each remaining move.
 [   ] Computer chooses move with min score (same index.)
 [   ] Add the concept of depth so player isn't fatalist
 [   ] Optimize - stop minimax when a move returns first loss.
-[   ] Refactor such that either human of computer can go first.
-[   ] Refactor such that board can be set to any grid size.
-
-## BUGS

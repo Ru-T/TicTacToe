@@ -7,15 +7,17 @@ class ComputerPlayer
 
   def initialize(name)
     @name = name
-    @board = Board.new
+    # @board = Board.new
+    # @block_move = nil
   end
 
-end  
-
+  # def computer_turn
+  #   first_move || second_move || blocking_move || random_move
+  #   puts @board.position
+  # end
+  #
   # def first_move
-  #   if @board.turn == 0
-  #     @board.position = "B2"
-  #   end
+  #   @board.position = "B2" if @board.turn == 0
   # end
   #
   # def second_move
@@ -32,61 +34,26 @@ end
   #   end
   # end
   #
-  # # def blocking_move
-  # #   @winning_lines.each do |line|
-  # #     check_for_block = []
-  # #     line.each do |position|
-  # #       if position.any? {|xy| @board[xy[0]][xy[1]].status == false}
-  # #         check_for_block << position
-  # #         if check_for_block.length == 2
-  # #           @block_move = line - check_for_block
-  # #           byebug
-  # #           break
-  # #         end
-  # #       end
-  # #     end
-  # #   end
-  # # end
+  # def blocking_move
+  #   @board.winning_lines.each do |line|
+  #     check_for_block = []
+  #     line.each do |xy|
+  #       if @board[xy[0]][xy[1]].status == false
+  #         check_for_block << xy
+  #       end
+  #       if check_for_block.length == 2
+  #         @block_move = line - check_for_block
+  #         break
+  #       end
+  #     end
+  #   end
+  #   if @board[@block_move[0][0]][@block_move[0][1]].status == nil
+  #     @board.position = get_position(@block_move)
+  #   end
+  # end
   #
   # def random_move
   #   @board.position = @board.moves.sample
   # end
 
-
-
-#
-# def computer_turn
-#   minimax
-#   puts @position
-# end
-#
-# def minimax
-#   scores = {}
-#   @moves.each do |move|
-#     x = x_of(move)
-#     y = y_of(move)
-#     @board[x][y].status = @p1_turn
-#     if final_state?
-#       final_score
-#       scores[move] = @score
-#     end
-#     take_turn
-#     minimax
-#   end
-#   scores.key(min)
-# end
-#
-# def final_score
-#   if @win == 1
-#     @score = 1
-#   elsif @win == -1
-#     @score = -1
-#   else full
-#     @score = 0
-#   end
-#   @score
-# end
-#
-# def final_state?
-#   @win == 1 || @win == -1 || full
-# end
+end
