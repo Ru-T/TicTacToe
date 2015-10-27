@@ -22,6 +22,7 @@ class Board
     @moves = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
     @turn = 0
     @block_move = nil
+    @win_move = nil
   end
 
   def play
@@ -67,11 +68,11 @@ private
   def winner
     @winning_lines.each do |line|
       if line.all?{|xy| @board[xy[0]][xy[1]].status}
-        puts "#{@game.player1.name}, you've won!"
+        puts "#{@game.player1.name} won!"
         @win = 1
         break
       elsif line.all?{|xy| @board[xy[0]][xy[1]].status == false}
-        puts "#{@game.player2.name}, you've won!"
+        puts "#{@game.player2.name} won!"
         @win = -1
         break
       else
@@ -90,7 +91,7 @@ private
   end
 
   def computer_turn
-    first_move || second_move || blocking_move || random_move #|| || winning_move
+    first_move || second_move || blocking_move || winning_move || random_move
     puts @position
   end
 
@@ -127,6 +128,23 @@ private
     end
     @position = get_position(@block_move) if @block_move
     @block_move = nil
+  end
+
+  def winning_move
+    @winning_lines.each do |line|
+      check_for_win = []
+      line.each do |xy|
+        if @board[xy[0]][xy[1]].status
+          check_for_win << xy
+        end
+        if check_for_win.length == 2
+          @win_move = line - check_for_win
+          break
+        end
+      end
+    end
+    @position = get_position(@win_move) if @win_move
+    @win_move = nil
   end
 
   def random_move
