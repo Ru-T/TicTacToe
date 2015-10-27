@@ -1,6 +1,7 @@
 require 'byebug'
 require './computer_player.rb'
 require './human_player.rb'
+require './board.rb'
 
 class Game
 
@@ -14,6 +15,7 @@ class Game
 
   def play
     set_up_game
+    @board.display_board
     play_game
   end
 
@@ -39,27 +41,7 @@ class Game
     end
   end
 
-  def take_turn
-    @p1_turn = !@p1_turn
-    @board.display_board
-  end
-
-  def winner
-    @board.winning_lines.each do |line|
-      if line.all?{|xy| @board.board[xy[0]][xy[1]].status}
-        puts "#{@player1.name} won!"
-        return true
-      elsif line.all?{|xy| @board.board[xy[0]][xy[1]].status == false}
-        puts "#{@player2.name} won!"
-        return true
-      else
-        return false
-      end
-    end
-  end
-
   def play_game
-    @board.display_board
     until @board.full do
       puts "Choose a move on the tic tac toe board."
       if @computer_game && @p1_turn
@@ -82,6 +64,32 @@ class Game
         puts "This spot does not exist. Sorry sucka!"
       end
     end
+    draw?
+  end
+
+  def take_turn
+    @p1_turn = !@p1_turn
+    @board.display_board
+  end
+
+  def winner
+    @board.winning_lines.each do |line|
+      if line.all?{|xy| @board.board[xy[0]][xy[1]].status}
+        puts "#{@player1.name} won!"
+        return true
+        break
+      elsif line.all?{|xy| @board.board[xy[0]][xy[1]].status == false}
+        puts "#{@player2.name} won!"
+        return true
+        break
+      else
+        return false
+        break
+      end
+    end
+  end
+
+  def draw?
     if @board.full && winner == false
       puts "The game is a draw."
     end

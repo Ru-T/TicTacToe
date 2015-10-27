@@ -1,4 +1,4 @@
-require './board'
+require './game'
 
 game = Game.new
 

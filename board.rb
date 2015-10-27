@@ -1,6 +1,5 @@
 require 'byebug'
 require './position.rb'
-require './game.rb'
 
 class Board
 
@@ -53,6 +52,7 @@ class Board
 
   def open_spots(move)
     @spots.delete(move)
+    @spots
   end
 
 end
