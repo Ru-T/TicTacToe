@@ -50,6 +50,14 @@ private
     y_hash[position[1]]
   end
 
+  def get_position(xy)
+    letter_hash = { 0 => "A", 1 => "B", 2 => "C" }
+    letter = letter_hash[xy[0][0]]
+    number_hash = {0 => "1", 1 => "2", 2 => "3" }
+    number = number_hash[xy[0][1]]
+    @position = "#{letter}" + "#{number}"
+  end
+
   def full
     board.all? { |row|
       row.all? { |position| position.occupied }
@@ -82,7 +90,7 @@ private
   end
 
   def computer_turn
-    first_move || second_move || blocking_move #|| random_move || winning_move
+    first_move || second_move || blocking_move || random_move #|| || winning_move
     puts @position
   end
 
@@ -109,16 +117,17 @@ private
   def blocking_move
     @winning_lines.each do |line|
       check_for_block = []
-      line.each do |position|
-        if position.any? {|xy| @board[xy[0]][xy[1]].status == false}
-          check_for_block << position
-          if check_for_block.length == 2
-            @block_move = line - check_for_block
-            break
-          end
+      line.each do |xy|
+        if @board[xy[0]][xy[1]].status == false
+          check_for_block << xy
+        end
+        if check_for_block.length == 2
+          @block_move = line - check_for_block
+          break
         end
       end
     end
+    @position = get_position(@block_move) if @block_move
   end
 
   def random_move

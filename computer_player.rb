@@ -1,4 +1,5 @@
 require 'byebug'
+require './board.rb'
 
 class ComputerPlayer
 
@@ -6,45 +7,86 @@ class ComputerPlayer
 
   def initialize(name)
     @name = name
-    # @board = Board.new
+    @board = Board.new
   end
 
-end
+end  
 
-# def possible_moves
-#   @moves.delete(@position)
-# end
+  # def first_move
+  #   if @board.turn == 0
+  #     @board.position = "B2"
+  #   end
+  # end
+  #
+  # def second_move
+  #   if @board.turn == 2
+  #     if @board[1][0].occupied || @board[2][0].occupied
+  #       @board.position = "A3"
+  #     elsif @board[0][1].occupied || @board[0][2].occupied
+  #       @board.position = "C1"
+  #     elsif @board[1][2].occupied || @board[2][1].occupied || @board[2][2].occupied
+  #       @board.position = "A1"
+  #     else @board[0][0].occupied
+  #       @board.position = "C3"
+  #     end
+  #   end
+  # end
+  #
+  # # def blocking_move
+  # #   @winning_lines.each do |line|
+  # #     check_for_block = []
+  # #     line.each do |position|
+  # #       if position.any? {|xy| @board[xy[0]][xy[1]].status == false}
+  # #         check_for_block << position
+  # #         if check_for_block.length == 2
+  # #           @block_move = line - check_for_block
+  # #           byebug
+  # #           break
+  # #         end
+  # #       end
+  # #     end
+  # #   end
+  # # end
+  #
+  # def random_move
+  #   @board.position = @board.moves.sample
+  # end
 
-  # @turn = 0
-  # @turn += 1
 
-  # def computer_turn
-#   first_move || random_move # || winning_move || blocking_move
+
+#
+# def computer_turn
+#   minimax
 #   puts @position
 # end
 #
-# def first_move
-#   if @turn == 1
-#     if @board[1][1].occupied == false
-#       @position = "B2"
-#     elsif @board[1][1].occupied
-#       @position = "A1"
+# def minimax
+#   scores = {}
+#   @moves.each do |move|
+#     x = x_of(move)
+#     y = y_of(move)
+#     @board[x][y].status = @p1_turn
+#     if final_state?
+#       final_score
+#       scores[move] = @score
 #     end
+#     take_turn
+#     minimax
 #   end
+#   scores.key(min)
 # end
-
-# def winning_move
-#   @winning_lines.each do |line|
-#     check_for_win = []
-#     line.each do |position|
-#       if position.any? {|xy| @board[xy[0]][xy[1]].status == false}
-#         check_for_win << position
-#         return line - check_for_win if check_for_win.length == 2
-#       end
-#     end
+#
+# def final_score
+#   if @win == 1
+#     @score = 1
+#   elsif @win == -1
+#     @score = -1
+#   else full
+#     @score = 0
 #   end
+#   @score
 # end
-
-# def random_move
-#   @position = @moves.sample
+#
+# def final_state?
+#   @win == 1 || @win == -1 || full
 # end

@@ -2,6 +2,7 @@ require 'byebug'
 require './computer_player.rb'
 require './human_player.rb'
 
+
 class Game
 
   attr_reader :player1, :player2, :computer_game
