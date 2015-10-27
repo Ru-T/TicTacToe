@@ -52,3 +52,27 @@
   # def score
   #   @score ||= final_score || middle_score
   # end
+
+  # def block_or_win_move
+  #   @winning_lines.each do |line|
+  #     check_for_block = []
+  #     check_for_win = []
+  #     line.each do |xy|
+  #       if @board[xy[0]][xy[1]].status == false
+  #         check_for_block << xy
+  #       elsif @board[xy[0]][xy[1]].status
+  #         check_for_win << xy
+  #       end
+  #       if check_for_block.length == 2
+  #         @next_move = line - check_for_block
+  #         break
+  #       elsif check_for_win.length == 2
+  #         @next_move = line - check_for_win
+  #         break
+  #       end
+  #     end
+  #   end
+  #   if @board[@next_move[0][0]][@next_move[0][1]].status == nil
+  #     @position = get_position(@next_move)
+  #   end
+  # end

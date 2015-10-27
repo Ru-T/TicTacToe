@@ -18,7 +18,7 @@ class Game
     puts "How many human players: one or two?"
     entry = gets.chomp
     if entry == "one"
-      @player1 = ComputerPlayer.new("Unbeatable")
+      @player1 = ComputerPlayer.new("Unbeatable") #hard-coded
       @computer_game = true
       puts "Please enter your name."
       name2 = gets.chomp
