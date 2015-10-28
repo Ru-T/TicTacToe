@@ -6,8 +6,7 @@ require './board.rb'
 class ComputerPlayerTest < Minitest::Test
 
   def setup
-    @board = Board.new
-    @computerplayer = ComputerPlayer.new("Unbeatable", @board)
+    @game = Game.new
   end
 
   def test_take_turn
@@ -40,14 +39,30 @@ class ComputerPlayerTest < Minitest::Test
   end
 
   def test_computer_blocking_move
+    @board.board[0][0].status = false
+    @board.board[0][2].status = false
+    assert_equal "A2", @computerplayer.blocking_move
 
+    @board.board[1][1].status = false
+    @board.board[1][2].status = false
+    assert_equal "B1", @computerplayer.blocking_move
 
+    @board.board[0][0].status = false
+    @board.board[2][0].status = false
+    assert_equal "B1", @computerplayer.blocking_move
 
+    @board.board[0][0].status = false
+    @board.board[1][1].status = false
+    assert_equal "C3", @computerplayer.blocking_move
 
+    @board.board[0][2].status = false
+    @board.board[2][0].status = false
+    assert_equal "B1", @computerplayer.blocking_move
   end
 
   def test_computer_random_move
-
+    @board.spots = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
+    assert @computerplayer.random_move
   end
 
 
