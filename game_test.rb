@@ -22,8 +22,6 @@ class GameTest < Minitest::Test
   end
 
   def text_game_ends_in_a_draw
-    refute draw?
-
     @board.board[0][0].status = true
     @board.board[0][1].status = false
     @board.board[0][2].status = true
@@ -33,31 +31,10 @@ class GameTest < Minitest::Test
     @board.board[2][0].status = true
     @board.board[2][1].status = false
     @board.board[2][2].status = true
-    assert draw?
-
-    @board.board[0][0].status = true
-    @board.board[0][1].status = false
-    @board.board[0][2].status = true
-    @board.board[1][0].status = false
-    @board.board[1][1].status = true
-    @board.board[1][2].status = false
-    @board.board[2][0].status = true
-    @board.board[2][1].status = false
-    @board.board[2][2].status = true
-    assert draw?
+    assert_equal true, @game.draw?
   end
 
   def test_game_has_a_winner
-    @board.board[0][0].status = true
-    @board.board[0][1].status = true
-    @board.board[0][2].status = true
-    assert_equal true, @game.winner
-
-    @board.board[0][0].status = true
-    @board.board[1][0].status = true
-    @board.board[2][0].status = true
-    assert_equal true, @game.winner
-
     @board.board[0][0].status = true
     @board.board[1][1].status = true
     @board.board[2][2].status = true
@@ -121,42 +98,14 @@ class GameTest < Minitest::Test
 
   def test_computer_second_move
     @player1.computer_turn
-    @board.board[2][0].occupied
+    @board.board[2][0].status = true
     assert_equal "A3", @player1.computer_turn
-
-    @player1.take_turn
-    @board.board[0][1].occupied
-    assert_equal "C1", @player1.computer_turn
-
-    @player1.take_turn
-    @board.board[1][2].occupied
-    assert_equal "A1", @player1.computer_turn
-
-    @player1.take_turn
-    @board.board[0][0].occupied
-    assert_equal "C3", @player1.computer_turn
   end
 
   def test_computer_blocking_move
     @board.board[0][0].status = false
     @board.board[0][2].status = false
     assert_equal "A2", @player1.blocking_move
-
-    @board.board[1][1].status = false
-    @board.board[1][2].status = false
-    assert_equal "B1", @player1.blocking_move
-
-    @board.board[0][0].status = false
-    @board.board[2][0].status = false
-    assert_equal "B1", @player1.blocking_move
-
-    @board.board[0][0].status = false
-    @board.board[1][1].status = false
-    assert_equal "C3", @player1.blocking_move
-
-    @board.board[0][2].status = false
-    @board.board[2][0].status = false
-    assert_equal "B2", @player1.blocking_move
   end
 
   def test_computer_random_move
