@@ -1,7 +1,6 @@
 ##BUGS
 [  ] Bug in winning method - not acknowledging some wins
 [  ] Bug in unbeatable - seemingly moving to random when should be blocking
-[  ] Bug in returning error when first entry is not "one" or "two"
 
 ## TASK LIST
 

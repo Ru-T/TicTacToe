@@ -86,11 +86,10 @@ class Game
         break
       elsif line.all?{|xy| @board.board[xy[0]][xy[1]].status == false}
         puts "#{@player2.name} won!"
-        @win = 1
+        @win = -1
         break
       else
         @win = 0
-        break
       end
     end
   end
