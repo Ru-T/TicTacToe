@@ -7,6 +7,8 @@ class ComputerPlayerTest < Minitest::Test
 
   def setup
     @game = Game.new
+    @board = Board.new
+    @computerplayer = ComputerPlayer.new("Unbeatable", @board)
   end
 
   def test_take_turn
