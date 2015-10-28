@@ -31,4 +31,4 @@ The computer player is unbeatable. How does s/he do this?
 
 - Refactor such that either human or computer can go first.
 - Refactor such that board can be set to any grid size.
-- Refactor to use MiniMax algorithm 
+- Refactor to use MiniMax algorithm

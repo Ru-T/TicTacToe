@@ -1,3 +1,9 @@
+##BUGS
+[  ] Bug in returning error when first entry is not "one" or "two"
+[  ] Bug in winning method - not acknowledging some wins
+[  ] Bug in unbeatable - seemingly moving to random when should be blocking
+
+
 ## TASK LIST
 
 [ X ] Create empty tic tac toe board
