@@ -16,7 +16,7 @@ class ComputerPlayer
   end
 
   def computer_turn #hard-coded
-    first_move || second_move || blocking_move || random_move
+    first_move || second_move || winning_move || blocking_move || random_move
   end
 
   def first_move
@@ -56,8 +56,32 @@ class ComputerPlayer
     return nil
   end
 
+  def find_winning_coordinates
+    @board.winning_lines.each do |line|
+      check_for_win = []
+      line.each do |xy|
+        if @board.check_status(xy)
+          check_for_win << xy
+          if check_for_win.length == 2
+            return (line - check_for_win).first
+          end
+        end
+      end
+    end
+    return nil
+  end
+
   def blocking_move
     xy = find_blocking_coordinates
+    if xy
+      if @board.board[xy[0]][xy[1]].occupied == false
+        @board.get_position(xy)
+      end
+    end
+  end
+
+  def winning_move
+    xy = find_winning_coordinates
     if xy
       if @board.board[xy[0]][xy[1]].occupied == false
         @board.get_position(xy)
