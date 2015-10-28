@@ -45,19 +45,26 @@ class ComputerPlayer
   def blocking_move
     @board.winning_lines.each do |line|
       check_for_block = []
+      check_for_win = []
       line.each do |xy|
         if @board.board[xy[0]][xy[1]].status == false
           check_for_block << xy
           if check_for_block.length == 2
-            @block_move = line - check_for_block
+            @next_move = line - check_for_block
+            break
+          end
+        else @board.board[xy[0]][xy[1]].status
+          check_for_win << xy
+          if check_for_win.length == 2
+            @next_move = line - check_for_win
             break
           end
         end
       end
     end
-    if @block_move
-      if @board.board[@block_move[0][0]][@block_move[0][1]].occupied == false
-        @board.get_position(@block_move)
+    if @next_move
+      if @board.board[@next_move[0][0]][@next_move[0][1]].occupied == false
+        @board.get_position(@next_move)
       end
     end
   end
