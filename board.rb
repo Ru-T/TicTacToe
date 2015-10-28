@@ -10,7 +10,9 @@ class Board
              [Position.new, Position.new, Position.new],
              [Position.new, Position.new, Position.new]]
     @winning_lines = [
-              [[0, 0], [0, 1], [0, 2]], [[1, 0], [1, 1], [1, 2]], [[2, 0], [2, 1], [2, 2]],
+              [[0, 0], [0, 1], [0, 2]],
+              [[1, 0], [1, 1], [1, 2]],
+              [[2, 0], [2, 1], [2, 2]],
               [[0, 0], [1, 0], [2, 0]], [[0, 1], [1, 1], [2, 1]], [[0, 2], [1, 2], [2, 2]],
               [[0, 0], [1, 1], [2, 2]], [[0, 2], [1, 1], [2, 0]]
               ]
@@ -44,9 +46,9 @@ class Board
 
   def get_position(xy)
     letter_hash = { 0 => "A", 1 => "B", 2 => "C" }
-    letter = letter_hash[xy[0][0]]
+    letter = letter_hash[xy[0]]
     number_hash = {0 => "1", 1 => "2", 2 => "3" }
-    number = number_hash[xy[0][1]]
+    number = number_hash[xy[1]]
     "#{letter}" + "#{number}"
   end
 

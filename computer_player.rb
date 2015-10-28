@@ -12,8 +12,7 @@ class ComputerPlayer
   end
 
   def take_turn
-    @turn = @turn + 1
-    @turn
+    @turn += 1
   end
 
   def computer_turn #hard-coded
@@ -42,22 +41,26 @@ class ComputerPlayer
     end
   end
 
-  def blocking_move
+  def find_blocking_coordinates
     @board.winning_lines.each do |line|
       check_for_block = []
       line.each do |xy|
         if @board.board[xy[0]][xy[1]].status == false
           check_for_block << xy
           if check_for_block.length == 2
-            @block_move = line - check_for_block
-            break
+            return (line - check_for_block).first
           end
         end
       end
     end
-    if @block_move
-      if @board.board[@block_move[0][0]][@block_move[0][1]].occupied == false
-        @board.get_position(@block_move)
+    return nil
+  end
+
+  def blocking_move
+    block_move = find_blocking_coordinates
+    if block_move
+      if @board.board[block_move[0]][block_move[1]].occupied == false
+        @board.get_position(block_move)
       end
     end
   end
