@@ -1,5 +1,4 @@
 ##BUGS
-[  ] Bug in winning method - not acknowledging some wins
 [  ] Bug in unbeatable - seemingly moving to random when should be blocking
 
 ## TASK LIST
