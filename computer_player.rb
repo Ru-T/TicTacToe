@@ -45,7 +45,7 @@ class ComputerPlayer
     @board.winning_lines.each do |line|
       check_for_block = []
       line.each do |xy|
-        if @board.board[xy[0]][xy[1]].status == false
+        if @board.check_status(xy) == false
           check_for_block << xy
           if check_for_block.length == 2
             return (line - check_for_block).first
@@ -57,10 +57,10 @@ class ComputerPlayer
   end
 
   def blocking_move
-    block_move = find_blocking_coordinates
-    if block_move
-      if @board.board[block_move[0]][block_move[1]].occupied == false
-        @board.get_position(block_move)
+    xy = find_blocking_coordinates
+    if xy
+      if @board.board[xy[0]][xy[1]].occupied == false
+        @board.get_position(xy)
       end
     end
   end

@@ -56,4 +56,8 @@ class Board
     @spots.delete(move)
   end
 
+  def check_status(xy)
+    @board[xy[0]][xy[1]].status
+  end
+
 end

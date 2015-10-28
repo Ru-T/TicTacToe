@@ -11,7 +11,6 @@ class Game
     @board = Board.new
     @computer_game = nil
     @p1_turn = true
-    @win = nil
   end
 
   def play
@@ -70,8 +69,7 @@ class Game
           take_turn
           @board.display_board
           @board.open_spots(move)
-          winner
-          break if @win == 1 || @win == -1
+          break if winner == true
         elsif @board.board[x][y].occupied
           puts "That spot is already taken!"
         end
@@ -88,22 +86,20 @@ class Game
 
   def winner
     @board.winning_lines.each do |line|
-      if line.all?{|xy| @board.board[xy[0]][xy[1]].status}
+      if line.all?{|xy| @board.check_status(xy)}
         puts "#{@player1.name} won!"
-        @win = 1
-        break
-      elsif line.all?{|xy| @board.board[xy[0]][xy[1]].status == false}
+        return true
+      elsif line.all?{|xy| @board.check_status(xy) == false}
         puts "#{@player2.name} won!"
-        @win = -1
-        break
+        return true
       else
-        @win = 0
+        false
       end
     end
   end
 
   def draw?
-    if @board.full && @win == 0
+    if @board.full && winner != true
       puts "The game is a draw."
     end
   end
