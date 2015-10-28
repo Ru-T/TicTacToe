@@ -38,13 +38,13 @@ class BoardTest < Minitest::Test
   end
 
   def test_get_position_from_coordinates
-    xy = [0, 0]
+    xy = [[0, 0]]
     assert_equal "A1", @board.get_position(xy)
 
-    xy2 = [1, 2]
+    xy2 = [[1, 2]]
     assert_equal "B3", @board.get_position(xy2)
 
-    xy3 = [2, 1]
+    xy3 = [[2, 1]]
     assert_equal "C2", @board.get_position(xy3)
   end
 
