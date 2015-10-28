@@ -52,7 +52,6 @@ class Board
 
   def open_spots(move)
     @spots.delete(move)
-    @spots
   end
 
 end

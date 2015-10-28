@@ -26,24 +26,32 @@ class Game
     entry = gets.chomp
     until @computer_game != nil
       if entry == "one"
-        @player1 = ComputerPlayer.new("Unbeatable", @board) #hard-coded
-        @computer_game = true
-        puts "Please enter your name."
-        name2 = gets.chomp
-        @player2 = HumanPlayer.new(name2, @board)
+        one_player_game
       elsif entry == "two"
-        @computer_game = false
-        puts "Player 1, please enter your name."
-        name1 = gets.chomp
-        @player1 = HumanPlayer.new(name1, @board)
-        puts "Player 2, please enter your name."
-        name2 = gets.chomp
-        @player2 = HumanPlayer.new(name2, @board)
+        two_player_game
       else
         puts "Please specify how many players: one or two."
         entry = gets.chomp
       end
     end
+  end
+
+  def one_player_game
+    @computer_game = true
+    @player1 = ComputerPlayer.new("Unbeatable", @board) #hard-coded
+    puts "Please enter your name."
+    name2 = gets.chomp
+    @player2 = HumanPlayer.new(name2, @board)
+  end
+
+  def two_player_game
+    @computer_game = false
+    puts "Player 1, please enter your name."
+    name1 = gets.chomp
+    @player1 = HumanPlayer.new(name1, @board)
+    puts "Player 2, please enter your name."
+    name2 = gets.chomp
+    @player2 = HumanPlayer.new(name2, @board)
   end
 
   def play_game
@@ -60,6 +68,7 @@ class Game
         if @board.board[x][y].occupied == false
           @board.board[x][y].status = @p1_turn
           take_turn
+          @board.display_board
           @board.open_spots(move)
           winner
           break if @win == 1 || @win == -1
@@ -75,7 +84,6 @@ class Game
 
   def take_turn
     @p1_turn = !@p1_turn
-    @board.display_board
   end
 
   def winner

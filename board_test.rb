@@ -50,10 +50,12 @@ class BoardTest < Minitest::Test
 
   def test_open_spots
     move = "A3"
-    assert_equal ["A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3"], @board.open_spots(move)
+    @board.open_spots(move)
+    assert_equal ["A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3"], @board.spots
 
     move2 = "C1"
-    assert_equal ["A1", "A2", "B1", "B2", "B3", "C2", "C3"], @board.open_spots(move2)
+    @board.open_spots(move2)
+    assert_equal ["A1", "A2", "B1", "B2", "B3", "C2", "C3"], @board.spots
   end
 
 end

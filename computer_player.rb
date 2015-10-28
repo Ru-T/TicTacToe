@@ -12,7 +12,8 @@ class ComputerPlayer
   end
 
   def take_turn
-    @turn += 1
+    @turn = @turn + 1
+    @turn
   end
 
   def computer_turn #hard-coded
