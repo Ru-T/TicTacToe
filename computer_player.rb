@@ -63,7 +63,6 @@ class ComputerPlayer
 
   def random_move
     @board.spots.sample
-    byebug
   end
 
 end

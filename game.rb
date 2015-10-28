@@ -9,8 +9,9 @@ class Game
 
   def initialize
     @board = Board.new
-    @computer_game = false
+    @computer_game = nil
     @p1_turn = true
+    @win = nil
   end
 
   def play
@@ -23,21 +24,25 @@ class Game
     puts "Welcome! It's time to play Tic Tac Toe."
     puts "How many human players: one or two?"
     entry = gets.chomp
-    if entry == "one"
-      @player1 = ComputerPlayer.new("Unbeatable", @board) #hard-coded
-      @computer_game = true
-      puts "Please enter your name."
-      name2 = gets.chomp
-      @player2 = HumanPlayer.new(name2, @board)
-    elsif entry == "two"
-      puts "Player 1, please enter your name."
-      name1 = gets.chomp
-      @player1 = HumanPlayer.new(name1, @board)
-      puts "Player 2, please enter your name."
-      name2 = gets.chomp
-      @player2 = HumanPlayer.new(name2, @board)
-    else
-      puts "Please specify how many players: one or two."
+    until @computer_game != nil
+      if entry == "one"
+        @player1 = ComputerPlayer.new("Unbeatable", @board) #hard-coded
+        @computer_game = true
+        puts "Please enter your name."
+        name2 = gets.chomp
+        @player2 = HumanPlayer.new(name2, @board)
+      elsif entry == "two"
+        @computer_game = false
+        puts "Player 1, please enter your name."
+        name1 = gets.chomp
+        @player1 = HumanPlayer.new(name1, @board)
+        puts "Player 2, please enter your name."
+        name2 = gets.chomp
+        @player2 = HumanPlayer.new(name2, @board)
+      else
+        puts "Please specify how many players: one or two."
+        entry = gets.chomp
+      end
     end
   end
 
@@ -56,7 +61,8 @@ class Game
           @board.board[x][y].status = @p1_turn
           take_turn
           @board.open_spots(move)
-          break if winner == true
+          winner
+          break if @win == 1 || @win == -1
         elsif @board.board[x][y].occupied
           puts "That spot is already taken!"
         end
@@ -76,21 +82,21 @@ class Game
     @board.winning_lines.each do |line|
       if line.all?{|xy| @board.board[xy[0]][xy[1]].status}
         puts "#{@player1.name} won!"
-        return true
+        @win = 1
         break
       elsif line.all?{|xy| @board.board[xy[0]][xy[1]].status == false}
         puts "#{@player2.name} won!"
-        return true
+        @win = 1
         break
       else
-        return false
+        @win = 0
         break
       end
     end
   end
 
   def draw?
-    if @board.full && winner == false
+    if @board.full && @win == 0
       puts "The game is a draw."
     end
   end
